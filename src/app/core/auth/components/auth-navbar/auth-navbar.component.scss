@@ -1,0 +1,15 @@
+@use "../../../../../styles/variables" as vars;
+.register-btn {
+  box-shadow: 0px 10px 30px 0px #4461f20d;
+  padding: 0.5rem 1rem;
+  border-radius: 15px;
+  text-decoration: none;
+  color: vars.$mainColor;
+  border: 1px solid #e0e0e9;
+}
+.signin-btn {
+  color: vars.$mainColor;
+  font-weight: bold;
+  text-decoration: none;
+  white-space: nowrap;
+}

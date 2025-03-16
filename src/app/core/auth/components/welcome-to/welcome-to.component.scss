@@ -1,0 +1,36 @@
+.elevate-color {
+  color: #122d9c;
+}
+.img {
+  width: 65%;
+}
+@media screen and (max-width: 1200px) {
+  .img {
+    width: 75%;
+    margin-top: 5rem;
+  }
+}
+@media screen and (max-width: 1064px) {
+  .fs-4 {
+    font-size: 1.25rem !important;
+  }
+  .img {
+    margin-top: 5rem;
+  }
+}
+@media screen and (max-width: 768px) {
+  img {
+    width: auto;
+  }
+  .img {
+    margin-top: 3rem;
+  }
+}
+@media screen and (max-width: 550px) {
+  img {
+    width: 100%;
+  }
+  .img {
+    margin-top: 5rem;
+  }
+}
