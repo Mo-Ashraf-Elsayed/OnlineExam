@@ -1,6 +1,6 @@
 import { inject } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
-import { LocalStorageMethodService } from '../services/local-storage-method.service';
+import { LocalStorageMethodService } from '../../shared/helper/local-storage-method.service';
 
 export const mainLayoutGuard: CanActivateFn = (route, state) => {
   const localStorage = inject(LocalStorageMethodService);

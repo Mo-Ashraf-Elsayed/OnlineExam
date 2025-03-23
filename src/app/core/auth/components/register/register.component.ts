@@ -1,7 +1,6 @@
 import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import {
-  AbstractControl,
   FormControl,
   FormGroup,
   ReactiveFormsModule,
@@ -11,7 +10,8 @@ import { SubmitBtnComponent } from '../submit-btn/submit-btn.component';
 import { ValidationMessagesComponent } from '../../../../shared/components/validation-messages/validation-messages.component';
 import { AuthApiService } from 'elevate-auth-api';
 import { Subscription } from 'rxjs';
-import { LocalStorageMethodService } from '../../../services/local-storage-method.service';
+import { LocalStorageMethodService } from '../../../../shared/helper/local-storage-method.service';
+import { matchPassword } from '../../../../shared/helper/password.match';
 
 @Component({
   selector: 'app-register',
@@ -63,7 +63,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
           Validators.pattern('^01[0-2,5]{1}[0-9]{8}$'),
         ]),
       },
-      { validators: this.matchPassword }
+      { validators: matchPassword }
     );
   }
   submitForm(): void {
@@ -86,11 +86,6 @@ export class RegisterComponent implements OnInit, OnDestroy {
       this.registerForm.markAllAsTouched();
       this.isFormSubmited = false;
     }
-  }
-  matchPassword(control: AbstractControl): object | null {
-    return control.get('password')?.value === control.get('rePassword')?.value
-      ? null
-      : { mismatch: true };
   }
   showAndHidePassword(input: string): void {
     if (input === 'password') this.isShowPassword = !this.isShowPassword;

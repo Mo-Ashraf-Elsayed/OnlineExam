@@ -10,7 +10,7 @@ import { SubmitBtnComponent } from '../submit-btn/submit-btn.component';
 import { AuthApiService } from 'elevate-auth-api';
 import { Subscription } from 'rxjs';
 import { ValidationMessagesComponent } from '../../../../shared/components/validation-messages/validation-messages.component';
-import { LocalStorageMethodService } from '../../../services/local-storage-method.service';
+import { LocalStorageMethodService } from '../../../../shared/helper/local-storage-method.service';
 
 @Component({
   selector: 'app-set-password',
