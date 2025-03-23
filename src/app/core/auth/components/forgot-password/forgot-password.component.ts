@@ -7,7 +7,7 @@ import {
   ReactiveFormsModule,
 } from '@angular/forms';
 import { SubmitBtnComponent } from '../submit-btn/submit-btn.component';
-import { AuthApiService } from 'auth-api';
+import { AuthApiService } from 'elevate-auth-api';
 import { Subscription } from 'rxjs';
 import { ValidationMessagesComponent } from '../../../../shared/components/validation-messages/validation-messages.component';
 

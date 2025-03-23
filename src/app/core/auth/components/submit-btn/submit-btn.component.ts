@@ -4,8 +4,6 @@ import { Component } from '@angular/core';
   selector: 'app-submit-btn',
   imports: [],
   templateUrl: './submit-btn.component.html',
-  styleUrl: './submit-btn.component.scss'
+  styleUrl: './submit-btn.component.scss',
 })
-export class SubmitBtnComponent {
-
-}
+export class SubmitBtnComponent {}
