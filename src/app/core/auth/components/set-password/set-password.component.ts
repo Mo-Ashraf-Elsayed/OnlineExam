@@ -11,6 +11,8 @@ import { AuthApiService } from 'elevate-auth-api';
 import { Subscription } from 'rxjs';
 import { ValidationMessagesComponent } from '../../../../shared/components/validation-messages/validation-messages.component';
 import { LocalStorageMethodService } from '../../../../shared/helper/local-storage-method.service';
+import { Store } from '@ngrx/store';
+import { setTokenAction } from '../../../../shared/store/token.action';
 
 @Component({
   selector: 'app-set-password',
@@ -28,6 +30,7 @@ export class SetPasswordComponent {
   private readonly router = inject(Router);
   private readonly activatedRoute = inject(ActivatedRoute);
   private readonly localStorage = inject(LocalStorageMethodService);
+  private readonly store = inject(Store);
   userEmail: string = '';
   cancelSubscription: Subscription = new Subscription();
   isFormSubmited: boolean = false;
@@ -55,6 +58,7 @@ export class SetPasswordComponent {
           next: (res) => {
             this.isFormSubmited = false;
             this.localStorage.myLocarStorage('setItem', 'token', res.token);
+            this.storeToken(res.token);
             this.router.navigate(['/home']);
           },
           error: () => {
@@ -79,6 +83,9 @@ export class SetPasswordComponent {
   }
   showAndHidePassword(): void {
     this.isShowPassword = !this.isShowPassword;
+  }
+  storeToken(t: string): void {
+    this.store.dispatch(setTokenAction({ value: t }));
   }
   ngOnInit(): void {
     this.setUserEmail();

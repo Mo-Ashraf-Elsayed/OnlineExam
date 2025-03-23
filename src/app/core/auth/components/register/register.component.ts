@@ -12,6 +12,8 @@ import { AuthApiService } from 'elevate-auth-api';
 import { Subscription } from 'rxjs';
 import { LocalStorageMethodService } from '../../../../shared/helper/local-storage-method.service';
 import { matchPassword } from '../../../../shared/helper/password.match';
+import { setTokenAction } from '../../../../shared/store/token.action';
+import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'app-register',
@@ -29,6 +31,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
   private readonly authService = inject(AuthApiService);
   private readonly localStorage = inject(LocalStorageMethodService);
   private readonly router = inject(Router);
+  private readonly store = inject(Store);
   cancelSubscription: Subscription = new Subscription();
   namePattren: string = '^[a-zA-Z]+$';
   isShowPassword: boolean = false;
@@ -76,6 +79,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
             this.isFormSubmited = false;
             this.isFormSubmited = false;
             this.localStorage.myLocarStorage('setItem', 'token', res.token);
+            this.storeToken(res.token);
             this.router.navigate(['/home']);
           },
           error: () => {
@@ -90,6 +94,9 @@ export class RegisterComponent implements OnInit, OnDestroy {
   showAndHidePassword(input: string): void {
     if (input === 'password') this.isShowPassword = !this.isShowPassword;
     else this.isShowRePassword = !this.isShowRePassword;
+  }
+  storeToken(t: string): void {
+    this.store.dispatch(setTokenAction({ value: t }));
   }
   ngOnInit(): void {
     this.initForm();

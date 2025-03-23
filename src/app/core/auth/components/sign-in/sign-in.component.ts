@@ -11,6 +11,8 @@ import { AuthApiService } from 'elevate-auth-api';
 import { Subscription } from 'rxjs';
 import { ValidationMessagesComponent } from '../../../../shared/components/validation-messages/validation-messages.component';
 import { LocalStorageMethodService } from '../../../../shared/helper/local-storage-method.service';
+import { Store } from '@ngrx/store';
+import { setTokenAction } from '../../../../shared/store/token.action';
 
 @Component({
   selector: 'app-sign-in',
@@ -28,6 +30,7 @@ export class SignInComponent implements OnInit, OnDestroy {
   private readonly authService = inject(AuthApiService);
   private readonly router = inject(Router);
   private readonly localStorage = inject(LocalStorageMethodService);
+  private readonly store = inject(Store);
   cancelSubscription: Subscription = new Subscription();
   isShowPassword: boolean = false;
   isFormSubmited: boolean = false;
@@ -51,6 +54,7 @@ export class SignInComponent implements OnInit, OnDestroy {
           next: (res) => {
             this.isFormSubmited = false;
             this.localStorage.myLocarStorage('setItem', 'token', res.token);
+            this.storeToken(res.token);
             this.router.navigate(['/home']);
           },
           error: () => {
@@ -64,6 +68,9 @@ export class SignInComponent implements OnInit, OnDestroy {
   }
   showAndHidePassword(): void {
     this.isShowPassword = !this.isShowPassword;
+  }
+  storeToken(t: string): void {
+    this.store.dispatch(setTokenAction({ value: t }));
   }
   ngOnInit(): void {
     this.initForm();
