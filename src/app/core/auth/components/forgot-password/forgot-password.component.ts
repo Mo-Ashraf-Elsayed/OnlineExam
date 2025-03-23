@@ -1,11 +1,64 @@
-import { Component } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit } from '@angular/core';
+import { Router, RouterLink } from '@angular/router';
+import {
+  FormGroup,
+  FormControl,
+  Validators,
+  ReactiveFormsModule,
+} from '@angular/forms';
 import { SubmitBtnComponent } from '../submit-btn/submit-btn.component';
-import { RouterLink } from '@angular/router';
+import { AuthApiService } from 'auth-api';
+import { Subscription } from 'rxjs';
+import { ValidationMessagesComponent } from '../../../../shared/components/validation-messages/validation-messages.component';
 
 @Component({
   selector: 'app-forgot-password',
-  imports: [SubmitBtnComponent, RouterLink],
+  imports: [
+    SubmitBtnComponent,
+    RouterLink,
+    ReactiveFormsModule,
+    ValidationMessagesComponent,
+  ],
   templateUrl: './forgot-password.component.html',
   styleUrl: './forgot-password.component.scss',
 })
-export class ForgotPasswordComponent {}
+export class ForgotPasswordComponent implements OnInit, OnDestroy {
+  forgotPasswordForm: FormGroup = new FormGroup({});
+  private readonly authService = inject(AuthApiService);
+  private readonly router = inject(Router);
+  cancelSubscription: Subscription = new Subscription();
+  isFormSubmited: boolean = false;
+  initForm(): void {
+    this.forgotPasswordForm = new FormGroup({
+      email: new FormControl(null, [Validators.required, Validators.email]),
+    });
+  }
+  submitForm(): void {
+    this.isFormSubmited = true;
+    if (this.forgotPasswordForm.valid && this.isFormSubmited) {
+      this.cancelSubscription = this.authService
+        .forgotPassword(this.forgotPasswordForm.value)
+        .subscribe({
+          next: () => {
+            this.isFormSubmited = false;
+            this.router.navigate(['/verifyCode'], {
+              queryParams: {
+                email: this.forgotPasswordForm.get('email')?.value,
+              },
+            });
+          },
+          error: () => {
+            this.isFormSubmited = false;
+          },
+        });
+    } else {
+      this.forgotPasswordForm.markAllAsTouched();
+    }
+  }
+  ngOnInit(): void {
+    this.initForm();
+  }
+  ngOnDestroy(): void {
+    this.cancelSubscription.unsubscribe();
+  }
+}

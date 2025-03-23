@@ -1,0 +1,65 @@
+@if(control.errors&&
+control.touched && !control.getError('mismatch')){
+@if(control.getError('required')){
+<div class="alert alert-danger mt-1 mb-0 p-2" role="alert">
+    This Input is Required
+</div>
+}@if(control.getError('minlength')){
+<div class="alert alert-danger mt-1 mb-0 p-2" role="alert">
+    @if(inputName == 'username'){
+    This input must be at least 5 characters
+    }
+</div>
+}
+@if(control.getError('maxlength')){
+<div class="alert alert-danger mt-1 mb-0 p-2" role="alert">
+    @if(inputName == 'username'){
+    This input mustn't exceed 20 characters
+    }
+</div>
+}
+@if(control.getError('email')){
+<div class="alert alert-danger mt-1 mb-0 p-2" role="alert">
+    Please enter a valid email
+</div>
+}
+@if(control.getError('pattern')){
+
+<div class="alert alert-danger mt-1 mb-0 p-2" role="alert">
+    @if(inputName == 'password'||inputName == 'newPasswod'){
+    Invalid password
+    <ul class="list-decimal ps-10">
+        <li>At least one upper case English letter</li>
+        <li>At least one lower case English letter</li>
+        <li>At least one digit</li>
+        <li>At least one special character</li>
+        <li>Minimum eight in length </li>
+    </ul>
+    }@else if(inputName == 'rePassword') {
+    Invalid password
+    <ul class="list-decimal ps-10">
+        <li>At least one upper case English letter</li>
+        <li>At least one lower case English letter</li>
+        <li>At least one digit</li>
+        <li>At least one special character</li>
+        <li>Minimum eight in length </li>
+    </ul>
+    }@else if(inputName == 'phone'){
+    The Number Must Start With 01(0,1,2,5) & Must be 11 caracteres
+    }@else if(inputName == 'firstName'){
+    The First Name Must Be Only Lettres
+    }
+    @else if(inputName == 'lastName'){
+    The Last Name Must Be Only Lettres
+    }@else if(inputName == 'resetCode'){
+    The input must be 6 numbers
+    }
+</div>
+}
+}
+
+@if(control.get('rePassword')?.touched &&control.getError('mismatch')){
+<div class="alert alert-danger mt-1 mb-0 p-2" role="alert">
+    Password Don't Match
+</div>
+}

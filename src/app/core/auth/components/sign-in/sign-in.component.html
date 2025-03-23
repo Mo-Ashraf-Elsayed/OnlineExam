@@ -1,18 +1,40 @@
 <div class="global-style-auth-comps mt-5">
     <h2 class="my-4 fw-bold">Sign in</h2>
-    <form class="form">
+    <form class="form" [formGroup]="loginForm" (ngSubmit)="submitForm()">
         <div>
-            <input type="email" class="form-control" placeholder="Email">
+            <input type="email" class="form-control" placeholder="Email"
+                formControlName="email">
+            <app-validation-messages
+                [control]="loginForm.get('email')!"
+                inputName="email"></app-validation-messages>
         </div>
-        <div class="position-relative">
-            <input type="password" class="form-control" placeholder="Password">
-            <img src="./images/fluent_eye-20-filled.png" alt
-                class="eye-img">
+        <div>
+            <div class="position-relative">
+                <input type="{{isShowPassword? 'text':'password'}}"
+                    formControlName="password"
+                    class="form-control" placeholder="Password">
+                <img src="./images/fluent_eye-20-filled.png" alt
+                    (click)="showAndHidePassword()"
+                    class="eye-img">
+            </div>
+            <app-validation-messages
+                [control]="loginForm.get('password')!"
+                inputName="password"></app-validation-messages>
         </div>
     </form>
     <div class="text-end mt-2"><a class="text-decoration-none text-main-color"
             routerLink="/forgotPassword">Recover Password ?</a></div>
-    <div class="my-5">
-        <app-submit-btn>Sign in</app-submit-btn>
+    <div class="my-5" [class.opacity-50]="isFormSubmited">
+        <app-submit-btn
+            (click)="submitForm()">
+
+            @if(isFormSubmited){
+            <div class="spinner-border text-light" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+            }@else{
+            Sign In
+            }
+        </app-submit-btn>
     </div>
 </div>

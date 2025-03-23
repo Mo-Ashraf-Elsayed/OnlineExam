@@ -1,10 +1,90 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import {
+  FormGroup,
+  FormControl,
+  Validators,
+  ReactiveFormsModule,
+} from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { SubmitBtnComponent } from '../submit-btn/submit-btn.component';
+import { AuthApiService } from 'auth-api';
+import { Subscription } from 'rxjs';
+import { ValidationMessagesComponent } from '../../../../shared/components/validation-messages/validation-messages.component';
+import { LocalStorageMethodService } from '../../../services/local-storage-method.service';
 
 @Component({
   selector: 'app-set-password',
-  imports: [SubmitBtnComponent],
+  imports: [
+    SubmitBtnComponent,
+    ReactiveFormsModule,
+    ValidationMessagesComponent,
+  ],
   templateUrl: './set-password.component.html',
   styleUrl: './set-password.component.scss',
 })
-export class SetPasswordComponent {}
+export class SetPasswordComponent {
+  setAPasswordForm: FormGroup = new FormGroup({});
+  private readonly authService = inject(AuthApiService);
+  private readonly router = inject(Router);
+  private readonly activatedRoute = inject(ActivatedRoute);
+  private readonly localStorage = inject(LocalStorageMethodService);
+  userEmail: string = '';
+  cancelSubscription: Subscription = new Subscription();
+  isFormSubmited: boolean = false;
+  isShowPassword: boolean = false;
+  initForm(): void {
+    this.setAPasswordForm = new FormGroup({
+      newPassword: new FormControl(null, [
+        Validators.required,
+        Validators.pattern(
+          '^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$'
+        ),
+      ]),
+    });
+  }
+  submitForm(): void {
+    this.isFormSubmited = true;
+    if (this.setAPasswordForm.valid && this.isFormSubmited) {
+      // Object.defineProperty(this.setAPasswordForm.value, 'email', {
+      //   value: this.userEmail,
+      // });
+      this.setAPasswordForm.value.email = this.userEmail;
+      this.cancelSubscription = this.authService
+        .resetPassword(this.setAPasswordForm.value)
+        .subscribe({
+          next: (res) => {
+            this.isFormSubmited = false;
+            this.localStorage.myLocarStorage('setItem', 'token', res.token);
+            this.router.navigate(['/home']);
+          },
+          error: () => {
+            this.isFormSubmited = false;
+          },
+        });
+    } else {
+      this.setAPasswordForm.markAllAsTouched();
+      this.isFormSubmited = false;
+    }
+  }
+  setUserEmail(): void {
+    this.activatedRoute.queryParams.subscribe(({ email }) => {
+      this.userEmail = email;
+    });
+  }
+  resendCode(): void {
+    let forgotPasswordData = {
+      email: this.userEmail,
+    };
+    this.authService.forgotPassword(forgotPasswordData).subscribe();
+  }
+  showAndHidePassword(): void {
+    this.isShowPassword = !this.isShowPassword;
+  }
+  ngOnInit(): void {
+    this.setUserEmail();
+    this.initForm();
+  }
+  ngOnDestroy(): void {
+    this.cancelSubscription.unsubscribe();
+  }
+}

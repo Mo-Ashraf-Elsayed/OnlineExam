@@ -1,7 +1,7 @@
 @use "./../../../../styles/variables" as vars;
 .welome-to {
   background-color: vars.$welcomeToBgColor;
-  height: 100vh;
+  min-height: 100vh;
   width: 50%;
   border-radius: 0 100px 100px 0;
   padding: 3rem 5rem 0;
@@ -13,7 +13,7 @@
   }
 }
 .nav-and-auth-comps {
-  height: 100vh;
+  min-height: 100vh;
   width: 50%;
   padding: 3rem 5rem 0;
 }
