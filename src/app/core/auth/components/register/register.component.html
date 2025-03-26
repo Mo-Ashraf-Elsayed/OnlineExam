@@ -1,88 +1,90 @@
 <div class="global-style-auth-comps">
     <h2 class="fw-bold my-4">Sign up</h2>
-    <form [formGroup]="registerForm" class="form" (ngSubmit)="submitForm()">
-        <div>
-            <input type="text" class="form-control"
-                placeholder="User Name"
-                formControlName="username">
-            <app-validation-messages
-                [control]="registerForm.get('username')!"
-                inputName="username"></app-validation-messages>
-        </div>
-        <div class="d-flex justify-content-between">
+    <form [formGroup]="registerForm" (ngSubmit)="submitForm()">
+        <div class="form">
             <div>
                 <input type="text" class="form-control"
-                    formControlName="firstName"
-                    placeholder="First Name">
+                    placeholder="User Name"
+                    formControlName="username">
                 <app-validation-messages
-                    [control]="registerForm.get('firstName')!"
-                    inputName="firstName"></app-validation-messages>
+                    [control]="registerForm.get('username')!"
+                    inputName="username"></app-validation-messages>
+            </div>
+            <div class="d-flex justify-content-between">
+                <div>
+                    <input type="text" class="form-control"
+                        formControlName="firstName"
+                        placeholder="First Name">
+                    <app-validation-messages
+                        [control]="registerForm.get('firstName')!"
+                        inputName="firstName"></app-validation-messages>
+                </div>
+                <div>
+                    <input type="text" class="form-control"
+                        formControlName="lastName" placeholder="Last Name">
+                    <app-validation-messages
+                        [control]="registerForm.get('lastName')!"
+                        inputName="lastName"></app-validation-messages>
+                </div>
             </div>
             <div>
-                <input type="text" class="form-control"
-                    formControlName="lastName" placeholder="Last Name">
+                <input type="email" class="form-control" formControlName="email"
+                    placeholder="Email">
                 <app-validation-messages
-                    [control]="registerForm.get('lastName')!"
-                    inputName="lastName"></app-validation-messages>
+                    [control]="registerForm.get('email')!"
+                    inputName="email"></app-validation-messages>
+            </div>
+            <div>
+                <div class="position-relative">
+                    <input type="{{isShowPassword? 'text':'password'}}"
+                        class="form-control"
+                        formControlName="password" placeholder="Password">
+                    <img src="./images/fluent_eye-20-filled.png" alt
+                        (click)="showAndHidePassword('password')"
+                        class="eye-img">
+                </div>
+                <app-validation-messages
+                    [control]="registerForm.get('password')!"
+                    inputName="password"></app-validation-messages>
+            </div>
+            <div>
+                <div class="position-relative">
+                    <input type="{{isShowRePassword? 'text':'password'}}"
+                        class="form-control"
+                        formControlName="rePassword"
+                        placeholder="Confirm Password">
+                    <img src="./images/fluent_eye-20-filled.png" alt
+                        (click)="showAndHidePassword('rePassword')"
+                        class="eye-img">
+                </div>
+                <app-validation-messages
+                    [control]="registerForm"
+                    inputName="rePassword"></app-validation-messages>
+            </div>
+            <div>
+                <input type="tel" formControlName="phone" class="form-control"
+                    placeholder="Phone number">
+                <app-validation-messages
+                    [control]="registerForm.get('phone')!"
+                    inputName="phone"></app-validation-messages>
             </div>
         </div>
-        <div>
-            <input type="email" class="form-control" formControlName="email"
-                placeholder="Email">
-            <app-validation-messages
-                [control]="registerForm.get('email')!"
-                inputName="email"></app-validation-messages>
-        </div>
-        <div>
-            <div class="position-relative">
-                <input type="{{isShowPassword? 'text':'password'}}"
-                    class="form-control"
-                    formControlName="password" placeholder="Password">
-                <img src="./images/fluent_eye-20-filled.png" alt
-                    (click)="showAndHidePassword('password')"
-                    class="eye-img">
-            </div>
-            <app-validation-messages
-                [control]="registerForm.get('password')!"
-                inputName="password"></app-validation-messages>
-        </div>
-        <div>
-            <div class="position-relative">
-                <input type="{{isShowRePassword? 'text':'password'}}"
-                    class="form-control"
-                    formControlName="rePassword"
-                    placeholder="Confirm Password">
-                <img src="./images/fluent_eye-20-filled.png" alt
-                    (click)="showAndHidePassword('rePassword')"
-                    class="eye-img">
-            </div>
-            <app-validation-messages
-                [control]="registerForm"
-                inputName="rePassword"></app-validation-messages>
-        </div>
-        <div>
-            <input type="tel" formControlName="phone" class="form-control"
-                placeholder="Phone number">
-            <app-validation-messages
-                [control]="registerForm.get('phone')!"
-                inputName="phone"></app-validation-messages>
+        <p class="text-center mt-3">Already have an account? <a
+                routerLink="/signin"
+                class="text-decoration-none text-main-color fw-medium">Login</a></p>
+        <div [class.opacity-50]="isFormSubmited" class="mt-5">
+            <app-submit-btn
+                (click)="submitForm()">
+
+                @if(isFormSubmited){
+                <div class="spinner-border text-light" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
+                }@else{
+                Create Account
+                }
+            </app-submit-btn>
         </div>
     </form>
-    <p class="text-center my-3 my-4">Already have an account? <a
-            routerLink="/signin"
-            class="text-decoration-none text-main-color fw-medium">Login</a></p>
-    <div [class.opacity-50]="isFormSubmited">
-        <app-submit-btn
-            (click)="submitForm()">
-
-            @if(isFormSubmited){
-            <div class="spinner-border text-light" role="status">
-                <span class="sr-only">Loading...</span>
-            </div>
-            }@else{
-            Create Account
-            }
-        </app-submit-btn>
-    </div>
 
 </div>

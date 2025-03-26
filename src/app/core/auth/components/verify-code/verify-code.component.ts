@@ -57,6 +57,7 @@ export class VerifyCodeComponent implements OnInit, OnDestroy {
         });
     } else {
       this.verifyCodeForm.markAllAsTouched();
+      this.isFormSubmited = false;
     }
   }
   setUserEmail(): void {

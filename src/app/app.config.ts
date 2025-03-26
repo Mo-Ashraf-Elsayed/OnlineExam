@@ -17,7 +17,7 @@ import { provideToastr } from 'ngx-toastr';
 import { errorInterceptor } from './core/interceptors/errors/error.interceptor';
 import { successInterceptor } from './core/interceptors/success/success.interceptor';
 import { provideStore } from '@ngrx/store';
-import { tokenReducer } from './shared/store/token.reducer';
+import { tokenReducer } from './core/store/token.reducer';
 
 export const appConfig: ApplicationConfig = {
   providers: [

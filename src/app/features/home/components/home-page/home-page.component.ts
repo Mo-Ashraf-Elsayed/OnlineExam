@@ -1,17 +1,19 @@
 import { AsyncPipe } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
+import { DecodedToken } from '../../../../core/auth/models/decoded-token';
 
 @Component({
   selector: 'app-home-page',
-  imports: [AsyncPipe],
+  imports: [],
   templateUrl: './home-page.component.html',
   styleUrl: './home-page.component.scss',
 })
 export class HomePageComponent implements OnInit {
-  token$!: Observable<string>;
-  constructor(private store: Store<{ token: string }>) {}
+  private readonly store = inject(Store);
+  token$!: Observable<DecodedToken>;
+  id: string = '';
   initToken(): void {
     this.token$ = this.store.select('token');
   }

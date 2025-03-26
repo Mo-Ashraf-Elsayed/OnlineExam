@@ -12,7 +12,8 @@ import { Subscription } from 'rxjs';
 import { ValidationMessagesComponent } from '../../../../shared/components/validation-messages/validation-messages.component';
 import { LocalStorageMethodService } from '../../../../shared/helper/local-storage-method.service';
 import { Store } from '@ngrx/store';
-import { setTokenAction } from '../../../../shared/store/token.action';
+import { setTokenAction } from '../../../store/token.action';
+import { jwtDecode } from 'jwt-decode';
 
 @Component({
   selector: 'app-sign-in',
@@ -47,14 +48,14 @@ export class SignInComponent implements OnInit, OnDestroy {
   }
   submitForm(): void {
     this.isFormSubmited = true;
-    if (this.loginForm.valid && this.isFormSubmited) {
+    if (this.loginForm.valid) {
       this.cancelSubscription = this.authService
         .signin(this.loginForm.value)
         .subscribe({
           next: (res) => {
             this.isFormSubmited = false;
             this.localStorage.myLocarStorage('setItem', 'token', res.token);
-            this.storeToken(res.token);
+            this.storeToken(jwtDecode(res.token));
             this.router.navigate(['/home']);
           },
           error: () => {

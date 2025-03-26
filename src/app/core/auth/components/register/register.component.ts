@@ -12,8 +12,9 @@ import { AuthApiService } from 'elevate-auth-api';
 import { Subscription } from 'rxjs';
 import { LocalStorageMethodService } from '../../../../shared/helper/local-storage-method.service';
 import { matchPassword } from '../../../../shared/helper/password.match';
-import { setTokenAction } from '../../../../shared/store/token.action';
+import { setTokenAction } from '../../../store/token.action';
 import { Store } from '@ngrx/store';
+import { jwtDecode } from 'jwt-decode';
 
 @Component({
   selector: 'app-register',
@@ -79,7 +80,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
             this.isFormSubmited = false;
             this.isFormSubmited = false;
             this.localStorage.myLocarStorage('setItem', 'token', res.token);
-            this.storeToken(res.token);
+            this.storeToken(jwtDecode(res.token));
             this.router.navigate(['/home']);
           },
           error: () => {
