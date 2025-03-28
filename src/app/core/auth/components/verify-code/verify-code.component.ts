@@ -40,7 +40,7 @@ export class VerifyCodeComponent implements OnInit, OnDestroy {
   }
   submitForm(): void {
     this.isFormSubmited = true;
-    if (this.verifyCodeForm.valid && this.isFormSubmited) {
+    if (this.verifyCodeForm.valid) {
       this.cancelSubscription = this.authService
         .verifyResetCode(this.verifyCodeForm.value)
         .subscribe({

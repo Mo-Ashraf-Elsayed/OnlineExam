@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-submit-btn',
@@ -6,4 +6,6 @@ import { Component } from '@angular/core';
   templateUrl: './submit-btn.component.html',
   styleUrl: './submit-btn.component.scss',
 })
-export class SubmitBtnComponent {}
+export class SubmitBtnComponent {
+  @Input() isSubmited!: boolean;
+}

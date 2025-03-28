@@ -1,27 +1,24 @@
 <div
     class="global-style-auth-comps mt-5 d-flex flex-column justify-content-center">
     <h2 class="my-4 fw-bold">Forgot Your Password</h2>
-    <form class="form" [formGroup]="verifyCodeForm"
+    <form [formGroup]="verifyCodeForm"
         (ngSubmit)="submitForm()">
-        <div>
-            <input type="tel" class="form-control" placeholder="Enter Code"
-                formControlName="resetCode">
-            <app-validation-messages
-                [control]="verifyCodeForm.get('resetCode')!"
-                inputName="resetCode"></app-validation-messages>
+        <div class="form">
+            <div>
+                <input type="tel" class="form-control" placeholder="Enter Code"
+                    formControlName="resetCode">
+                <app-validation-messages
+                    [control]="verifyCodeForm.get('resetCode')!"
+                    inputName="resetCode"></app-validation-messages>
+            </div>
+        </div>
+        <div class="text-end mt-2">Didn’t receive a code? <a
+                (click)="resendCode()"
+                class="text-main-color text-decoration-none cursor-pointer">Resend</a></div>
+        <div class="my-5">
+            <app-submit-btn
+                [isSubmited]="isFormSubmited">Verify</app-submit-btn>
         </div>
     </form>
-    <div class="text-end mt-2">Didn’t receive a code? <a (click)="resendCode()"
-            class="text-main-color text-decoration-none cursor-pointer">Resend</a></div>
-    <div class="my-5" [class.opacity-50]="isFormSubmited">
-        <app-submit-btn
-            (click)="submitForm()">
-            @if(isFormSubmited){
-            <div class="spinner-border text-light" role="status">
-                <span class="sr-only">Loading...</span>
-            </div>
-            }@else{
-            Verify
-            }</app-submit-btn>
-    </div>
+
 </div>

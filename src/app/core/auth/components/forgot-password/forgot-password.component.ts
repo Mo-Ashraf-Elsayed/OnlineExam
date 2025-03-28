@@ -37,7 +37,7 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
   }
   submitForm(): void {
     this.isFormSubmited = true;
-    if (this.forgotPasswordForm.valid && this.isFormSubmited) {
+    if (this.forgotPasswordForm.valid) {
       this.cancelSubscription = this.authService
         .forgotPassword(this.forgotPasswordForm.value)
         .subscribe({

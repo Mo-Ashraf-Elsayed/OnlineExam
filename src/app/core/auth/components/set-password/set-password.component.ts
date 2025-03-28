@@ -50,7 +50,7 @@ export class SetPasswordComponent {
   }
   submitForm(): void {
     this.isFormSubmited = true;
-    if (this.setAPasswordForm.valid && this.isFormSubmited) {
+    if (this.setAPasswordForm.valid) {
       // Object.defineProperty(this.setAPasswordForm.value, 'email', {
       //   value: this.userEmail,
       // });

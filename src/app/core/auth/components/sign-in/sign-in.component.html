@@ -24,16 +24,9 @@
         <div class="text-end "><a
                 class="text-decoration-none text-main-color"
                 routerLink="/forgotPassword">Recover Password ?</a></div>
-        <div class="mt-2" [class.opacity-50]="isFormSubmited">
-            <app-submit-btn>
-                @if(isFormSubmited){
-                <div class="spinner-border text-light" role="status">
-                    <span class="sr-only">Loading...</span>
-                </div>
-                }@else{
-                Sign In
-                }
-            </app-submit-btn>
+        <div class="mt-2">
+            <app-submit-btn [isSubmited]="isFormSubmited"> Sign
+                In</app-submit-btn>
         </div>
     </form>
 

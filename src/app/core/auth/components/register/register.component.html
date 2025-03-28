@@ -72,18 +72,9 @@
         <p class="text-center mt-3">Already have an account? <a
                 routerLink="/signin"
                 class="text-decoration-none text-main-color fw-medium">Login</a></p>
-        <div [class.opacity-50]="isFormSubmited" class="mt-5">
-            <app-submit-btn
-                (click)="submitForm()">
-
-                @if(isFormSubmited){
-                <div class="spinner-border text-light" role="status">
-                    <span class="sr-only">Loading...</span>
-                </div>
-                }@else{
-                Create Account
-                }
-            </app-submit-btn>
+        <div class="mt-5">
+            <app-submit-btn [isSubmited]="isFormSubmited">Create
+                Account</app-submit-btn>
         </div>
     </form>
 

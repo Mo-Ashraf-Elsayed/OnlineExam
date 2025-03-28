@@ -72,12 +72,11 @@ export class RegisterComponent implements OnInit, OnDestroy {
   }
   submitForm(): void {
     this.isFormSubmited = true;
-    if (this.registerForm.valid && this.isFormSubmited) {
+    if (this.registerForm.valid) {
       this.cancelSubscription = this.authService
         .register(this.registerForm.value)
         .subscribe({
           next: (res) => {
-            this.isFormSubmited = false;
             this.isFormSubmited = false;
             this.localStorage.myLocarStorage('setItem', 'token', res.token);
             this.storeToken(jwtDecode(res.token));

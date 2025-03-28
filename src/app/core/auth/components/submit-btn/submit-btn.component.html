@@ -1,3 +1,10 @@
-<button type="submit">
+<button type="submit" [disabled]="isSubmited"
+    [class.opacity-50]="isSubmited">
+    @if(isSubmited){
+    <div class="spinner-border text-light" role="status">
+        <span class="sr-only">Loading...</span>
+    </div>
+    }@else{
     <ng-content></ng-content>
+    }
 </button>
