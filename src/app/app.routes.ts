@@ -5,6 +5,9 @@ import { SignInComponent } from './core/auth/components/sign-in/sign-in.componen
 import { HomePageComponent } from './features/home/components/home-page/home-page.component';
 import { isLoggedInGuard } from './core/guards/is-logged-in.guard';
 import { mainLayoutGuard } from './core/guards/main-layout.guard';
+import { ForgotPasswordComponent } from './core/auth/components/forgot-password/forgot-password.component';
+import { VerifyCodeComponent } from './core/auth/components/verify-code/verify-code.component';
+import { SetPasswordComponent } from './core/auth/components/set-password/set-password.component';
 
 export const routes: Routes = [
   {
@@ -26,25 +29,14 @@ export const routes: Routes = [
         path: 'forgotPassword',
         loadComponent: () =>
           import(
-            './core/auth/components/forgot-password/forgot-password.component'
-          ).then((c) => c.ForgotPasswordComponent),
+            './core/auth/components/forgot-pass-flow/forgot-pass-flow.component'
+          ).then((c) => c.ForgotPassFlowComponent),
         title: 'Forgot Password',
-      },
-      {
-        path: 'verifyCode',
-        loadComponent: () =>
-          import(
-            './core/auth/components/verify-code/verify-code.component'
-          ).then((c) => c.VerifyCodeComponent),
-        title: 'Verify Code',
-      },
-      {
-        path: 'setPassword',
-        loadComponent: () =>
-          import(
-            './core/auth/components/set-password/set-password.component'
-          ).then((c) => c.SetPasswordComponent),
-        title: 'Login',
+        children: [
+          { path: '', component: ForgotPasswordComponent },
+          { path: 'verify', component: VerifyCodeComponent },
+          { path: 'setPass', component: SetPasswordComponent },
+        ],
       },
     ],
   },

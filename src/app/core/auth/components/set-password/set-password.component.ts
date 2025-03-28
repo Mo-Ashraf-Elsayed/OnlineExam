@@ -14,6 +14,7 @@ import { LocalStorageMethodService } from '../../../../shared/helper/local-stora
 import { Store } from '@ngrx/store';
 import { setTokenAction } from '../../../store/token.action';
 import { jwtDecode } from 'jwt-decode';
+import { UserEmailService } from '../../services/user-email.service';
 
 @Component({
   selector: 'app-set-password',
@@ -28,6 +29,7 @@ import { jwtDecode } from 'jwt-decode';
 export class SetPasswordComponent {
   setAPasswordForm: FormGroup = new FormGroup({});
   private readonly authService = inject(AuthApiService);
+  private readonly userEmailService = inject(UserEmailService);
   private readonly router = inject(Router);
   private readonly activatedRoute = inject(ActivatedRoute);
   private readonly localStorage = inject(LocalStorageMethodService);
@@ -72,9 +74,7 @@ export class SetPasswordComponent {
     }
   }
   setUserEmail(): void {
-    this.activatedRoute.queryParams.subscribe(({ email }) => {
-      this.userEmail = email;
-    });
+    this.userEmail = this.userEmailService.userEmail();
   }
   resendCode(): void {
     let forgotPasswordData = {

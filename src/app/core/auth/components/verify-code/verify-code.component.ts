@@ -10,6 +10,7 @@ import { SubmitBtnComponent } from '../submit-btn/submit-btn.component';
 import { AuthApiService } from 'elevate-auth-api';
 import { Subscription } from 'rxjs';
 import { ValidationMessagesComponent } from '../../../../shared/components/validation-messages/validation-messages.component';
+import { UserEmailService } from '../../services/user-email.service';
 
 @Component({
   selector: 'app-verify-code',
@@ -24,8 +25,8 @@ import { ValidationMessagesComponent } from '../../../../shared/components/valid
 export class VerifyCodeComponent implements OnInit, OnDestroy {
   verifyCodeForm: FormGroup = new FormGroup({});
   private readonly authService = inject(AuthApiService);
+  private readonly userEmailService = inject(UserEmailService);
   private readonly router = inject(Router);
-  private readonly activatedRoute = inject(ActivatedRoute);
   userEmail: string = '';
   cancelSubscription: Subscription = new Subscription();
   isFormSubmited: boolean = false;
@@ -45,10 +46,8 @@ export class VerifyCodeComponent implements OnInit, OnDestroy {
         .subscribe({
           next: () => {
             this.isFormSubmited = false;
-            this.router.navigate(['/setPassword'], {
-              queryParams: {
-                email: this.userEmail,
-              },
+            this.router.navigate(['/forgotPassword/setPass'], {
+              skipLocationChange: true,
             });
           },
           error: () => {
@@ -61,9 +60,7 @@ export class VerifyCodeComponent implements OnInit, OnDestroy {
     }
   }
   setUserEmail(): void {
-    this.activatedRoute.queryParams.subscribe(({ email }) => {
-      this.userEmail = email;
-    });
+    this.userEmail = this.userEmailService.userEmail();
   }
   resendCode(): void {
     let forgotPasswordData = {
