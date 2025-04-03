@@ -4,10 +4,18 @@ import { LocalStorageMethodService } from '../../../shared/helper/local-storage-
 import { Store } from '@ngrx/store';
 import { setTokenAction } from '../../store/token.action';
 import { jwtDecode } from 'jwt-decode';
+import { SidebarComponent } from '../../../shared/components/sidebar/sidebar.component';
+import { UpperInputSecComponent } from '../../../shared/components/upper-input-sec/upper-input-sec.component';
+import { NavbarComponent } from '../../../shared/components/navbar/navbar.component';
 
 @Component({
   selector: 'app-main-layout',
-  imports: [RouterOutlet],
+  imports: [
+    RouterOutlet,
+    SidebarComponent,
+    UpperInputSecComponent,
+    NavbarComponent,
+  ],
   templateUrl: './main-layout.component.html',
   styleUrl: './main-layout.component.scss',
 })

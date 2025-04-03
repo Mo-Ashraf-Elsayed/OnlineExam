@@ -1,0 +1,40 @@
+
+<aside [class]="{
+    'show-sidebar': sidebarInputSearchService.isSidebarOpened|async,
+    'sidebar': !(sidebarInputSearchService.isSidebarOpened|async),
+}"
+    (click)="onDocumentClick($event)">
+    <div class="inner-sidebar">
+        <div class="d-flex justify-content-between">
+            <a
+                class="d-flex align-items-center mb-3">
+                <span class="fs-4"><img src="./images/logo.png" class="logo-img"
+                        alt></span>
+            </a>
+            <div class="close-btn pointer" (click)="closeSideBar()">
+                <i class="bi bi-x-lg p-1"></i>
+            </div>
+        </div>
+        <ul class="mt-5">
+            <li>
+                <a class="sidebar-link">
+                    <i class="bi bi-grid-1x2-fill"></i>
+                    Dashboard
+                </a>
+            </li>
+            <li class="mt-4">
+                <a class="sidebar-link">
+                    <i class="bi bi-clock-history"></i>
+                    Quiz Histroy
+                </a>
+            </li>
+            <li class="mt-5">
+                <a class="sidebar-link pointer"
+                    (click)="logOut()">
+                    <i class="bi bi-arrow-left logout-icon"></i>
+                    Log Out
+                </a>
+            </li>
+        </ul>
+    </div>
+</aside>

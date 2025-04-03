@@ -1,0 +1,64 @@
+@use "./../../../../styles/functions" as funs;
+@use "./../../../../styles/variables" as vars;
+@use "./../../../../styles/break-points" as bp;
+.parent-ele {
+  height: funs.pxToRem(61);
+  .img {
+    width: funs.pxToRem(61);
+    height: funs.pxToRem(61);
+    border-radius: 50%;
+    overflow: hidden;
+  }
+}
+
+.input-ele {
+  display: flex;
+  align-items: center;
+  border: 1px #e0e0e0 solid;
+  border-radius: 20px;
+  box-shadow: 0px 15px 40px 0px #0000001a;
+  &:focus-within {
+    border-color: vars.$mainColor;
+  }
+  .form-control {
+    border-radius: 20px;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    align-self: stretch;
+    background-color: white;
+    outline: none;
+    border: none;
+    box-shadow: none;
+  }
+  .search-icon {
+    display: flex;
+    align-items: center;
+    background-color: white;
+    align-self: stretch;
+    padding: 0 funs.pxToRem(18);
+    border-radius: 20px;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    color: vars.$mainColor;
+    border: none;
+  }
+}
+@media only screen and (max-width: bp.$md) {
+  .parent-ele {
+    display: none;
+  }
+  .img {
+    display: none;
+  }
+  .hide-input-sec {
+    display: none;
+  }
+  .show-input-sec {
+    display: flex;
+    align-items: center;
+    height: 100vh;
+    position: absolute;
+    top: 0;
+    background-color: rgba(0, 0, 0, 0.333);
+  }
+}

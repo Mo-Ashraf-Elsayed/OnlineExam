@@ -1,0 +1,21 @@
+@use "./../../../../styles/functions" as funs;
+@use "./../../../../styles/variables" as vars;
+@use "./../../../../styles/break-points" as bp;
+.img {
+  width: funs.pxToRem(40);
+  height: funs.pxToRem(40);
+  border-radius: 50%;
+  overflow: hidden;
+}
+nav {
+  background-color: vars.$mainColor;
+  color: white;
+  padding: funs.pxToRem(11);
+  display: none;
+  width: 100%;
+}
+@media only screen and (max-width: bp.$md) {
+  nav {
+    display: block;
+  }
+}
