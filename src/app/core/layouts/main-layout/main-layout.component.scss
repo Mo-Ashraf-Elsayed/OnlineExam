@@ -2,10 +2,11 @@
 @use "./../../../../styles/variables" as vars;
 @use "./../../../../styles/break-points" as bp;
 main {
-  height: 100vh;
+  min-height: 100vh;
   padding: funs.pxToRem(40) funs.pxToRem(80) 0 funs.pxToRem(32);
   background-color: vars.$bgMainColor;
   display: flex;
+  font-family: "Poppins", sans-serif;
   section {
     flex-grow: 1;
   }
@@ -13,5 +14,8 @@ main {
 @media only screen and (max-width: bp.$md) {
   main {
     padding: 0;
+  }
+  .routing-sec {
+    padding: 0 funs.pxToRem(16) funs.pxToRem(16) funs.pxToRem(16);
   }
 }

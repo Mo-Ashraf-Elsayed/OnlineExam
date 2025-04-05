@@ -10,7 +10,6 @@
     overflow: hidden;
   }
 }
-
 .input-ele {
   display: flex;
   align-items: center;
@@ -57,8 +56,9 @@
     display: flex;
     align-items: center;
     height: 100vh;
-    position: absolute;
+    position: fixed;
     top: 0;
+    z-index: 5;
     background-color: rgba(0, 0, 0, 0.333);
   }
 }

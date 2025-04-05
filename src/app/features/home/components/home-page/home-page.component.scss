@@ -1,4 +1,5 @@
 @use "./../../../../../styles/functions" as funs;
+@use "./../../../../../styles/variables" as vars;
 @use "./../../../../../styles/break-points" as bp;
 
 section {
@@ -7,8 +8,24 @@ section {
   background-color: white;
   box-shadow: 0px 15px 40px 0px #0000000d;
   border-radius: 20px;
+  h4,
+  button {
+    color: vars.$mainColor;
+    font-size: funs.pxToRem(24);
+    display: inline-block;
+    margin-bottom: funs.pxToRem(24);
+    border: none;
+    background-color: white;
+    &:hover {
+      color: vars.$mainColor;
+    }
+  }
+  .view-all {
+    cursor: pointer;
+    text-decoration: none;
+    margin-left: auto;
+  }
 }
-
 @media only screen and (max-width: bp.$md) {
   section {
     margin-top: funs.pxToRem(24);

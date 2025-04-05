@@ -12,7 +12,7 @@ import { Subscription } from 'rxjs';
 import { ValidationMessagesComponent } from '../../../../shared/components/validation-messages/validation-messages.component';
 import { LocalStorageMethodService } from '../../../../shared/helper/local-storage-method.service';
 import { Store } from '@ngrx/store';
-import { setTokenAction } from '../../../store/token.action';
+import { setTokenAction } from '../../../store/token/token.action';
 import { jwtDecode } from 'jwt-decode';
 import { UserEmailService } from '../../services/user-email.service';
 

@@ -12,7 +12,7 @@ import { AuthApiService } from 'elevate-auth-api';
 import { Subscription } from 'rxjs';
 import { LocalStorageMethodService } from '../../../../shared/helper/local-storage-method.service';
 import { matchPassword } from '../../../../shared/helper/password.match';
-import { setTokenAction } from '../../../store/token.action';
+import { setTokenAction } from '../../../store/token/token.action';
 import { Store } from '@ngrx/store';
 import { jwtDecode } from 'jwt-decode';
 

@@ -60,3 +60,10 @@
 .pointer {
   cursor: pointer;
 }
+.active-route {
+  background-color: vars.$mainColor;
+  color: white !important;
+  i {
+    color: white !important;
+  }
+}

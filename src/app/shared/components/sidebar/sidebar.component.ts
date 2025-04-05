@@ -1,12 +1,12 @@
 import { Component, inject } from '@angular/core';
 import { AsyncPipe } from '@angular/common';
-import { Router } from '@angular/router';
+import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { SidebarInputSearchService } from '../../services/sidebar-inputSearch.service';
 import { LocalStorageMethodService } from '../../helper/local-storage-method.service';
 
 @Component({
   selector: 'app-sidebar',
-  imports: [AsyncPipe],
+  imports: [AsyncPipe, RouterLink, RouterLinkActive],
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.scss',
 })

@@ -6,7 +6,7 @@
     (click)="onDocumentClick($event)">
     <div class="inner-sidebar">
         <div class="d-flex justify-content-between">
-            <a
+            <a routerLink="/home"
                 class="d-flex align-items-center mb-3">
                 <span class="fs-4"><img src="./images/logo.png" class="logo-img"
                         alt></span>
@@ -17,7 +17,8 @@
         </div>
         <ul class="mt-5">
             <li>
-                <a class="sidebar-link">
+                <a class="sidebar-link" routerLink="/home"
+                    routerLinkActive="active-route">
                     <i class="bi bi-grid-1x2-fill"></i>
                     Dashboard
                 </a>

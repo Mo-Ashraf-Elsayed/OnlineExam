@@ -17,7 +17,8 @@ import { provideToastr } from 'ngx-toastr';
 import { errorInterceptor } from './core/interceptors/errors/error.interceptor';
 import { successInterceptor } from './core/interceptors/success/success.interceptor';
 import { provideStore } from '@ngrx/store';
-import { tokenReducer } from './core/store/token.reducer';
+import { tokenReducer } from './core/store/token/token.reducer';
+import { headersInterceptor } from './core/interceptors/headers/headers.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -26,7 +27,11 @@ export const appConfig: ApplicationConfig = {
     provideClientHydration(withEventReplay()),
     provideHttpClient(
       withFetch(),
-      withInterceptors([successInterceptor, errorInterceptor])
+      withInterceptors([
+        headersInterceptor,
+        successInterceptor,
+        errorInterceptor,
+      ])
     ),
     provideAnimations(),
     provideToastr(),

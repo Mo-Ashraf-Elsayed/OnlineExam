@@ -18,7 +18,7 @@ ul {
     text-decoration: none;
     font-weight: bold;
     color: vars.$sidebarTextColor;
-    padding: funs.pxToRem(12);
+    padding: funs.pxToRem(10);
     display: inline-block;
     border-radius: 10px;
     white-space: nowrap;
@@ -39,8 +39,6 @@ ul {
 .logo-img {
   width: funs.pxToRem(151);
   height: funs.pxToRem(29);
-  background-color: black;
-  color: black;
 }
 @media only screen and (max-width: bp.$md) {
   .sidebar {
@@ -56,10 +54,11 @@ ul {
     margin-top: funs.pxToRem(62);
   }
   .show-sidebar {
-    position: absolute;
+    position: fixed;
     top: 0;
+    bottom: 0;
+    z-index: 5;
     width: 100%;
-    height: 100vh;
     background-color: rgba(0, 0, 0, 0.3);
   }
 }

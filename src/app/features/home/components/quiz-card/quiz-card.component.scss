@@ -1,0 +1,27 @@
+@use "./../../../../../styles/functions" as funs;
+.sub-card {
+  position: relative;
+  box-shadow: 0px 2px 30px 0px #00000040;
+  border-radius: 10px;
+  overflow: hidden;
+  .discription {
+    position: absolute;
+    bottom: funs.pxToRem(27);
+    left: funs.pxToRem(27);
+    right: funs.pxToRem(27);
+    background-color: #1935ca66;
+    backdrop-filter: blur(27.01353645324707px);
+    border-radius: 10px;
+    padding: funs.pxToRem(15);
+    color: white;
+    h5 {
+      font-size: funs.pxToRem(13);
+      font-weight: 800;
+    }
+    p {
+      font-size: funs.pxToRem(11);
+      font-weight: 500;
+      margin: 0;
+    }
+  }
+}
