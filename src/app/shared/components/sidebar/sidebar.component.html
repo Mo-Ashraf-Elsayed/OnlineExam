@@ -4,7 +4,7 @@
     'sidebar': !(sidebarInputSearchService.isSidebarOpened|async),
 }"
     (click)="onDocumentClick($event)">
-    <div class="inner-sidebar">
+    <div class="inner-sidebar" #innerSidebar>
         <div class="d-flex justify-content-between">
             <a routerLink="/home"
                 class="d-flex align-items-center mb-3">

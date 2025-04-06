@@ -1,4 +1,10 @@
-import { Component, inject } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  HostListener,
+  inject,
+  ViewChild,
+} from '@angular/core';
 import { AsyncPipe } from '@angular/common';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { SidebarInputSearchService } from '../../services/sidebar-inputSearch.service';
@@ -16,6 +22,18 @@ export class SidebarComponent {
   );
   private readonly router = inject(Router);
   readonly sidebarInputSearchService = inject(SidebarInputSearchService);
+  @ViewChild('innerSidebar') innerSidebar!: ElementRef;
+  @HostListener('window:scroll', ['$event'])
+  scrollAndMarginSidebarHandler(): void {
+    if (scrollY <= 62) {
+      console.log(window.scrollY);
+      this.innerSidebar.nativeElement.style.margin = `${
+        62 - window.scrollY
+      }px 0 0 0`;
+    } else {
+      this.innerSidebar.nativeElement.style.margin = `0`;
+    }
+  }
   closeSideBar() {
     this.sidebarInputSearchService.isSidebarOpened.next(false);
   }
