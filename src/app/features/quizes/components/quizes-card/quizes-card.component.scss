@@ -1,0 +1,40 @@
+@use "./../../../../../styles/variables" as vars;
+@use "./../../../../../styles/functions" as funs;
+
+section {
+  border-radius: 10px;
+  background-color: white;
+  padding: funs.pxToRem(16) funs.pxToRem(24);
+  margin-bottom: funs.pxToRem(24);
+  .quiz-img {
+    margin-right: funs.pxToRem(24);
+  }
+  .quiz-info {
+    display: flex;
+    flex-direction: column;
+    h6 {
+      font-weight: 500;
+    }
+    p {
+      color: #535353;
+      margin: 0;
+      font-size: funs.pxToRem(13);
+    }
+  }
+  .start-quiz-sec {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    p {
+      font-size: funs.pxToRem(13);
+      margin-bottom: funs.pxToRem(8);
+    }
+    button {
+      background-color: vars.$mainColor;
+      color: white;
+      border-radius: 10px;
+      border: none;
+      padding: funs.pxToRem(4) funs.pxToRem(24);
+    }
+  }
+}

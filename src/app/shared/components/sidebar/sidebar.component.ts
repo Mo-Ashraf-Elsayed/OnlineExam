@@ -25,19 +25,29 @@ export class SidebarComponent {
   @ViewChild('innerSidebar') innerSidebar!: ElementRef;
   @HostListener('window:scroll', ['$event'])
   scrollAndMarginSidebarHandler(): void {
-    if (scrollY <= 62) {
-      console.log(window.scrollY);
-      this.innerSidebar.nativeElement.style.margin = `${
+    if (scrollY <= 62 && innerWidth <= 768) {
+      this.innerSidebar.nativeElement.style.marginTop = `${
         62 - window.scrollY
-      }px 0 0 0`;
+      }px `;
     } else {
-      this.innerSidebar.nativeElement.style.margin = `0`;
+      this.innerSidebar.nativeElement.style.marginTop = `0`;
+    }
+  }
+  @HostListener('window:resize', ['$event'])
+  resizeAndMarginSidebarHandler(): void {
+    if (innerWidth >= 768) {
+      this.sidebarInputSearchService.isSidebarOpened.next(false);
+      this.innerSidebar.nativeElement.style.marginTop = `0`;
+    } else {
+      this.innerSidebar.nativeElement.style.marginTop = `${
+        62 - window.scrollY
+      }px `;
     }
   }
   closeSideBar() {
     this.sidebarInputSearchService.isSidebarOpened.next(false);
   }
-  onDocumentClick(event: MouseEvent): void {
+  onAsideEletClick(event: MouseEvent): void {
     const clickedElement = event.target as HTMLElement;
     if (clickedElement.tagName.toLowerCase() === 'aside') {
       this.sidebarInputSearchService.isSidebarOpened.next(false);

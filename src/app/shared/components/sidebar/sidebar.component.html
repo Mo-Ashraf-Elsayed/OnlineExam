@@ -3,7 +3,7 @@
     'show-sidebar': sidebarInputSearchService.isSidebarOpened|async,
     'sidebar': !(sidebarInputSearchService.isSidebarOpened|async),
 }"
-    (click)="onDocumentClick($event)">
+    (click)="onAsideEletClick($event)">
     <div class="inner-sidebar" #innerSidebar>
         <div class="d-flex justify-content-between">
             <a routerLink="/home"

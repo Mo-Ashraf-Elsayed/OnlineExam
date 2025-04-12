@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
-import { QuizesListComponent } from '../quizes-list/quizes-list.component';
+import { RouterLink } from '@angular/router';
+import { SubjectsListComponent } from '../subjects-list/subjects-list.component';
 
 @Component({
   selector: 'app-home-page',
-  imports: [QuizesListComponent],
+  imports: [SubjectsListComponent, RouterLink],
   templateUrl: './home-page.component.html',
   styleUrl: './home-page.component.scss',
 })

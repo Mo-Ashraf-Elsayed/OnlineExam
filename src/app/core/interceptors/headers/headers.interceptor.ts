@@ -6,7 +6,7 @@ export const headersInterceptor: HttpInterceptorFn = (req, next) => {
   const localStorage = inject(LocalStorageMethodService);
   const userToken = localStorage.myLocarStorage('getItem', 'token');
   if (typeof userToken === 'string') {
-    if (req.url.includes('subjects')) {
+    if (req.url.includes('subjects') || req.url.includes('exams')) {
       req = req.clone({
         setHeaders: {
           token: userToken,

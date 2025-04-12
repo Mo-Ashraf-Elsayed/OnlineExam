@@ -3,7 +3,6 @@
 @use "./../../../../../styles/break-points" as bp;
 
 section {
-  margin-top: funs.pxToRem(40);
   padding: funs.pxToRem(16) funs.pxToRem(32);
   background-color: white;
   box-shadow: 0px 15px 40px 0px #0000000d;
@@ -27,7 +26,6 @@ section {
 }
 @media only screen and (max-width: bp.$md) {
   section {
-    margin-top: funs.pxToRem(24);
     padding: funs.pxToRem(16) funs.pxToRem(32);
   }
 }

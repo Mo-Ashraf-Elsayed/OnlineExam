@@ -11,11 +11,15 @@ main {
     flex-grow: 1;
   }
 }
+.routing-sec {
+  margin-top: funs.pxToRem(40);
+}
 @media only screen and (max-width: bp.$md) {
   main {
     padding: 0;
   }
   .routing-sec {
+    margin-top: funs.pxToRem(24);
     padding: 0 funs.pxToRem(16) funs.pxToRem(16) funs.pxToRem(16);
   }
 }

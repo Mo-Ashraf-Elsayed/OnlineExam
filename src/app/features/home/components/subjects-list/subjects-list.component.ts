@@ -1,16 +1,17 @@
 import { Component, inject, Input, OnChanges, OnDestroy } from '@angular/core';
-import { QuizCardComponent } from '../quiz-card/quiz-card.component';
+import { SubjectCardComponent } from '../subject-card/subject-card.component';
 import { SubjectsService } from '../../services/subjects.service';
-import { SubjectObj } from '../../models/interface/all-subjects';
+import { SubjectObj } from '../../models/interface/all-subjects.interface';
 import { Subscription } from 'rxjs';
+import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 
 @Component({
-  selector: 'app-quizes-list',
-  imports: [QuizCardComponent],
-  templateUrl: './quizes-list.component.html',
-  styleUrl: './quizes-list.component.scss',
+  selector: 'app-subjects-list',
+  imports: [SubjectCardComponent, NgxSkeletonLoaderModule],
+  templateUrl: './subjects-list.component.html',
+  styleUrl: './subjects-list.component.scss',
 })
-export class QuizesListComponent implements OnChanges, OnDestroy {
+export class SubjectsListComponent implements OnChanges, OnDestroy {
   @Input() isAllSubjectsLoaded: boolean = false;
   private readonly subjectsService = inject(SubjectsService);
   subjectsArr: SubjectObj[] = [] as SubjectObj[];

@@ -1,0 +1,8 @@
+@use "./../../../../../styles/functions" as funs;
+
+.skeleton {
+  border-radius: 10px;
+  background-color: white;
+  padding: funs.pxToRem(16) funs.pxToRem(24);
+  margin-bottom: funs.pxToRem(24);
+}

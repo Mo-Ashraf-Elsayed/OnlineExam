@@ -8,6 +8,7 @@ import { mainLayoutGuard } from './core/guards/main-layout.guard';
 import { ForgotPasswordComponent } from './core/auth/components/forgot-password/forgot-password.component';
 import { VerifyCodeComponent } from './core/auth/components/verify-code/verify-code.component';
 import { SetPasswordComponent } from './core/auth/components/set-password/set-password.component';
+import { QuizesListComponent } from './features/quizes/components/quizes-list/quizes-list.component';
 
 export const routes: Routes = [
   {
@@ -47,6 +48,8 @@ export const routes: Routes = [
     children: [
       { path: '', redirectTo: 'home', pathMatch: 'full' },
       { path: 'home', component: HomePageComponent, title: 'Home' },
+      { path: 'allQuizes', component: QuizesListComponent, title: 'Quizes' },
+      { path: 'quizes/:id', component: QuizesListComponent, title: 'Quizes' },
     ],
   },
 ];
