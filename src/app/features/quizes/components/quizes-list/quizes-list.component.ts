@@ -1,21 +1,37 @@
-import { Component, inject, OnDestroy, OnInit } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  inject,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { QuizesService } from '../../services/quizes.service';
 import { Exam } from '../../models/interfaces/quizes.interface';
 import { QuizesCardComponent } from '../quizes-card/quizes-card.component';
 import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 import { Subscription } from 'rxjs';
+import { QuestionsModalComponent } from '../../../questions/components/questions-modal/questions-modal.component';
+import { Store } from '@ngrx/store';
+import { setQuizIdAction } from '../../../../core/store/quizId/quizId.action';
 
 @Component({
   selector: 'app-quizes-list',
-  imports: [QuizesCardComponent, NgxSkeletonLoaderModule],
+  imports: [
+    QuizesCardComponent,
+    NgxSkeletonLoaderModule,
+    QuestionsModalComponent,
+  ],
   templateUrl: './quizes-list.component.html',
   styleUrl: './quizes-list.component.scss',
 })
 export class QuizesListComponent implements OnInit, OnDestroy {
   private readonly quizesService = inject(QuizesService);
   private readonly activatedRoute = inject(ActivatedRoute);
+  private readonly store: Store = inject(Store);
   private cancelSubFromQuizes: Subscription = new Subscription();
+  @ViewChild('questionsModel') questionsModel!: ElementRef;
   quizes: Exam[] = [] as Exam[];
   subjectId: string | null = null;
   isThereQuizes: boolean = true;
@@ -48,6 +64,10 @@ export class QuizesListComponent implements OnInit, OnDestroy {
         },
       });
     }
+  }
+  setQuizIdToStore(quizId: string) {
+    this.questionsModel.nativeElement.classList.remove('d-none');
+    this.store.dispatch(setQuizIdAction({ value: quizId }));
   }
   ngOnInit(): void {
     this.getSubjectId();

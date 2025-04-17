@@ -1,6 +1,7 @@
 <section>
     @for (quiz of quizes; track $index) {
-    <app-quizes-card [quiz]="quiz"></app-quizes-card>
+    <app-quizes-card [quiz]="quiz"
+        (startQuiz)="setQuizIdToStore($event)"></app-quizes-card>
     }@empty {
     @if(isThereQuizes){
     <div class="skeleton">
@@ -28,3 +29,6 @@
     }
     }
 </section>
+<div #questionsModel class="d-none">
+    <app-questions-modal></app-questions-modal>
+</div>

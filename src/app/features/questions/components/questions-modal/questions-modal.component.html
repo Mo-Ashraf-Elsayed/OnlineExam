@@ -1,0 +1,12 @@
+<section>
+    @if(!isQuizStarted){
+    <div class="instructionsBox">
+        <app-instructions-card
+            (startQuiz)="startQuiz()"></app-instructions-card>
+    </div>
+    }@else{
+    <div class="questionCardBox">
+        <app-question-card></app-question-card>
+    </div>
+    }
+</section>

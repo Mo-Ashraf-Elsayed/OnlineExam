@@ -1,0 +1,102 @@
+@use "./../../../../../styles/variables" as vars;
+@use "./../../../../../styles/functions" as funs;
+@use "./../../../../../styles/break-points" as bp;
+.question-card {
+  width: 600px;
+  .nubmer-of-questions {
+    color: vars.$mainColor;
+    font-size: funs.pxToRem(14);
+  }
+  .duration {
+    color: #11ce19;
+    font-size: funs.pxToRem(20);
+    display: flex;
+    align-items: center;
+    column-gap: funs.pxToRem(8);
+    &.almost-done {
+      color: #ce2711;
+    }
+  }
+  .questions-steps {
+    display: flex;
+    column-gap: funs.pxToRem(16);
+    margin-top: funs.pxToRem(27);
+    span {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      display: inline-block;
+      background-color: #d9d9d9;
+      &.answerd {
+        background-color: vars.$mainColor;
+      }
+    }
+  }
+  .question {
+    font-weight: 500;
+    font-size: funs.pxToRem(20);
+    margin-top: funs.pxToRem(48);
+    margin-bottom: funs.pxToRem(24);
+  }
+  .choices {
+    .choice {
+      background-color: #edeff3;
+      border-radius: 10px;
+      padding: funs.pxToRem(16) funs.pxToRem(8);
+      margin-bottom: funs.pxToRem(16);
+      display: flex;
+      align-items: center;
+      &:focus-within {
+        background-color: #ccd7eb;
+        color: #011234;
+      }
+      input {
+        margin: funs.pxToRem(16);
+        width: 20px;
+        height: 20px;
+        &[type="radio"] {
+          accent-color: #02369c;
+        }
+      }
+    }
+  }
+  .btns {
+    display: flex;
+    justify-content: space-between;
+    gap: funs.pxToRem(48);
+    margin-top: funs.pxToRem(48);
+    font-size: funs.pxToRem(24);
+    font-weight: 500;
+    button {
+      border-radius: 100px;
+      padding: 0.5rem 0;
+      border: 1px solid vars.$mainColor;
+      width: 100%;
+      transition: 0.3s all;
+      &.disabled-back-btn {
+        background-color: #e5e5e5;
+        color: #000000;
+        border-color: #e5e5e5;
+      }
+      &.back {
+        color: vars.$mainColor;
+        border-color: vars.$mainColor;
+        background-color: transparent;
+        &:hover {
+          background-color: vars.$mainColor;
+          color: white;
+        }
+      }
+      &.next {
+        background-color: vars.$mainColor;
+        color: white;
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: bp.$md) {
+  .question-card {
+    width: 80vw;
+  }
+}

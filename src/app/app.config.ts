@@ -18,7 +18,9 @@ import { errorInterceptor } from './core/interceptors/errors/error.interceptor';
 import { successInterceptor } from './core/interceptors/success/success.interceptor';
 import { provideStore } from '@ngrx/store';
 import { tokenReducer } from './core/store/token/token.reducer';
+import { quizIdReducer } from './core/store/quizId/quizId.reducer';
 import { headersInterceptor } from './core/interceptors/headers/headers.interceptor';
+import { quizArrReducer } from './core/store/quizArr/quizArr.reducer';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -41,6 +43,8 @@ export const appConfig: ApplicationConfig = {
     },
     provideStore({
       token: tokenReducer,
+      quizId: quizIdReducer,
+      quizArr: quizArrReducer,
     }),
   ],
 };

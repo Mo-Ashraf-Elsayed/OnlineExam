@@ -1,0 +1,21 @@
+@use "./../../../../../styles/functions" as funs;
+section {
+  background-color: #00000080;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .instructionsBox,
+  .questionCardBox {
+    background-color: white;
+    box-shadow: 0px 1px 10px 0px #00000040;
+    border-radius: 20px;
+    padding: funs.pxToRem(24);
+    width: fit-content;
+  }
+}

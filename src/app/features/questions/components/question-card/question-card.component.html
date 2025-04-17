@@ -1,0 +1,48 @@
+@if(questionsArr.length){
+<div class="question-card">
+    <div class="d-flex justify-content-between">
+        <p class="nubmer-of-questions">Question {{currentQuestionIndex+1}} of
+            {{questionsArr.length}}</p>
+        <p class="duration" [class.almost-done]="durationCounter < 10"><img
+                src="./images/alarm.png"
+                alt> {{`
+            ${durationCounter < 10 ?
+            `0${durationCounter}`:durationCounter}.${minute < 10?
+            `0${minute}`:minute}
+            `}}</p>
+    </div>
+    <div class="questions-steps">
+        @for (item of answerdQuestions; track $index) {
+        <span class="answerd"></span>
+        }
+        @for (item of notAnswerdQuestions; track $index) {
+        <span></span>
+        }
+    </div>
+    <div class="question">
+        {{questionsArr[currentQuestionIndex].question}}
+    </div>
+    <div class="choices">
+        @for (answer of questionsArr[currentQuestionIndex].answers; track
+        $index)
+        {
+        <div class="choice">
+            <input
+                type="{{questionsArr[currentQuestionIndex].type == 'single_choice'?'radio':'checkbox'}}"
+                name="answer" id="{{answer.key}}"
+                value="{{answer.key}}">
+            <label for="{{answer.key}}">{{answer.answer}}</label>
+        </div>
+        }
+    </div>
+    <div class="btns">
+        <button type="button" [class]="{
+                'disabled-back-btn':currentQuestionIndex == 0,
+                'back':currentQuestionIndex != 0,
+            }" (click)="back()"
+            [disabled]="currentQuestionIndex == 0">Back</button>
+        <button type="button" class="next" (click)="next()">Next</button>
+    </div>
+</div>
+
+}

@@ -13,7 +13,7 @@
             class="col-4 col-lg-2">
             <div class="start-quiz-sec">
                 <p>{{quiz.duration}} Minute</p>
-                <button>Strat</button>
+                <button (click)="startQuiz.emit(quiz._id)">Strat</button>
             </div>
         </div>
     </div>
