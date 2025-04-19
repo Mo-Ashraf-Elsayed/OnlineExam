@@ -21,6 +21,7 @@ import { tokenReducer } from './core/store/token/token.reducer';
 import { quizIdReducer } from './core/store/quizId/quizId.reducer';
 import { headersInterceptor } from './core/interceptors/headers/headers.interceptor';
 import { quizArrReducer } from './core/store/quizArr/quizArr.reducer';
+import { userAnswersReducer } from './core/store/userAnswers/userAnswers.reducer';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -45,6 +46,7 @@ export const appConfig: ApplicationConfig = {
       token: tokenReducer,
       quizId: quizIdReducer,
       quizArr: quizArrReducer,
+      userAnswers: userAnswersReducer,
     }),
   ],
 };

@@ -60,7 +60,7 @@
       }
     }
   }
-  .btns {
+  .questions-btns {
     display: flex;
     justify-content: space-between;
     gap: funs.pxToRem(48);
@@ -78,7 +78,7 @@
         color: #000000;
         border-color: #e5e5e5;
       }
-      &.back {
+      &.back-btn {
         color: vars.$mainColor;
         border-color: vars.$mainColor;
         background-color: transparent;
@@ -87,7 +87,7 @@
           color: white;
         }
       }
-      &.next {
+      &.next-and-show-result-btn {
         background-color: vars.$mainColor;
         color: white;
       }

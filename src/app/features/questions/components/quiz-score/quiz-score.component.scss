@@ -1,0 +1,76 @@
+@use "./../../../../../styles/variables" as vars;
+@use "./../../../../../styles/functions" as funs;
+@use "./../../../../../styles/break-points" as bp;
+$correct: #02369c;
+$in-correct: #cc1010;
+.score-parent-ele {
+  width: 638px;
+  h4 {
+    margin-bottom: funs.pxToRem(48);
+  }
+  .score {
+    p {
+      width: 170px;
+      display: flex;
+      justify-content: space-between;
+      font-size: funs.pxToRem(24);
+      font-weight: 500;
+      span {
+        display: inline-block;
+        text-align: center;
+        line-height: 32px;
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        border: solid 1px;
+        font-size: funs.pxToRem(16);
+      }
+    }
+    .correct {
+      color: $correct;
+      span {
+        border-color: $correct;
+      }
+    }
+    .in-correct {
+      color: $in-correct;
+      span {
+        border-color: $in-correct;
+      }
+    }
+  }
+  .score-btns {
+    display: flex;
+    justify-content: space-between;
+    gap: funs.pxToRem(48);
+    margin-top: funs.pxToRem(48);
+    button {
+      font-size: funs.pxToRem(18);
+      font-weight: 500;
+      border-radius: 100px;
+      white-space: nowrap;
+      padding: 0.5rem 0;
+      border: 1px solid vars.$mainColor;
+      width: 100%;
+      transition: 0.3s all;
+      &.back-btn {
+        color: vars.$mainColor;
+        border-color: vars.$mainColor;
+        background-color: transparent;
+        &:hover {
+          background-color: vars.$mainColor;
+          color: white;
+        }
+      }
+      &.show-result-btn {
+        background-color: vars.$mainColor;
+        color: white;
+      }
+    }
+  }
+}
+@media only screen and (max-width: bp.$md) {
+  .score-parent-ele {
+    width: 80vw;
+  }
+}

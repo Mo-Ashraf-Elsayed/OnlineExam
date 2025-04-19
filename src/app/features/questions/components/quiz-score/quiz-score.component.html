@@ -1,0 +1,12 @@
+<div class="score-parent-ele">
+    <h4>Your score</h4>
+    <div class="score">
+        <p class="correct">Correct <span>{{correct}}</span></p>
+        <p class="in-correct">Incorrect <span>{{inCorrect}}</span></p>
+    </div>
+    <div class="score-btns">
+        <button class="back-btn" routerLink="/home">Back</button>
+        <button class="show-result-btn" (click)="showResult.emit()">Show
+            Result</button>
+    </div>
+</div>

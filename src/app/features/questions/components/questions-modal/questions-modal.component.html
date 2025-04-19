@@ -1,12 +1,21 @@
 <section>
-    @if(!isQuizStarted){
+    @if(quizPhase== 'instructions'){
     <div class="instructionsBox">
         <app-instructions-card
             (startQuiz)="startQuiz()"></app-instructions-card>
     </div>
-    }@else{
+    }@else if(quizPhase== 'start'){
     <div class="questionCardBox">
-        <app-question-card></app-question-card>
+        <app-question-card
+            (finishQuizAndShowScore)="finishQuiz()"></app-question-card>
+    </div>
+    }@else if(quizPhase== 'finishedAndShowScore'){
+    <div class="quizScoreBox">
+        <app-quiz-score (showResult)="showResult()"></app-quiz-score>
+    </div>
+    }@else if(quizPhase == 'result'){
+    <div class="quizResultBox">
+        <app-quiz-result></app-quiz-result>
     </div>
     }
 </section>

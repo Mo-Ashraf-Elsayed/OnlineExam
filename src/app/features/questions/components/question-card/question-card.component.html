@@ -22,27 +22,44 @@
     <div class="question">
         {{questionsArr[currentQuestionIndex].question}}
     </div>
-    <div class="choices">
-        @for (answer of questionsArr[currentQuestionIndex].answers; track
-        $index)
-        {
-        <div class="choice">
-            <input
-                type="{{questionsArr[currentQuestionIndex].type == 'single_choice'?'radio':'checkbox'}}"
-                name="answer" id="{{answer.key}}"
-                value="{{answer.key}}">
-            <label for="{{answer.key}}">{{answer.answer}}</label>
+    <form [formGroup]="answerForm">
+        <div class="choices">
+            @for (answer of questionsArr[currentQuestionIndex].answers; track
+            $index)
+            {
+            <div class="choice">
+                @if(questionsArr[currentQuestionIndex].type == 'single_choice'){
+                <input value="{{answer.key}}" formControlName="userAnswer"
+                    type="radio"
+                    name="userAnswer" [id]="answer.key">
+                }@else {
+                <input value="{{answer.key}}" formControlName="userAnswer"
+                    type="checkbox"
+                    name="userAnswer" [id]="answer.key">
+                }
+                <label [for]="answer.key">{{answer.answer}}</label>
+            </div>
+            }
         </div>
-        }
-    </div>
-    <div class="btns">
-        <button type="button" [class]="{
+        <div class="questions-btns">
+            <button type="button" [class]="{
                 'disabled-back-btn':currentQuestionIndex == 0,
-                'back':currentQuestionIndex != 0,
+                'back-btn':currentQuestionIndex != 0,
             }" (click)="back()"
-            [disabled]="currentQuestionIndex == 0">Back</button>
-        <button type="button" class="next" (click)="next()">Next</button>
-    </div>
+                [disabled]="currentQuestionIndex == 0">Back</button>
+            @if(currentQuestionIndex +1 === questionsArr.length){
+            <button type="button" class="next-and-show-result-btn"
+                (click)="next();finishQuizAndShowScore.emit()">
+                Submit
+            </button>
+            }@else {
+            <button type="button" class="next-and-show-result-btn"
+                (click)="next()">
+                next
+            </button>
+            }
+        </div>
+    </form>
 </div>
 
 }

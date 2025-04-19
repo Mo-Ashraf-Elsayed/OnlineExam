@@ -1,4 +1,4 @@
-import { Component, ElementRef, inject, ViewChild } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { InstructionsCardComponent } from '../instructions-card/instructions-card.component';
 import { QuestionCardComponent } from '../question-card/question-card.component';
 import { Store } from '@ngrx/store';
@@ -6,10 +6,17 @@ import { Observable } from 'rxjs';
 import { QuestionsService } from '../../services/questions.service';
 import { QuestionsResAdabtor } from '../../models/interfaces/adapt-questions-res.interface';
 import { setQuizArrAction } from '../../../../core/store/quizArr/quizArr.action';
+import { QuizScoreComponent } from '../quiz-score/quiz-score.component';
+import { QuizResultComponent } from '../quiz-result/quiz-result.component';
 
 @Component({
   selector: 'app-questions-modal',
-  imports: [InstructionsCardComponent, QuestionCardComponent],
+  imports: [
+    InstructionsCardComponent,
+    QuestionCardComponent,
+    QuizScoreComponent,
+    QuizResultComponent,
+  ],
   templateUrl: './questions-modal.component.html',
   styleUrl: './questions-modal.component.scss',
 })
@@ -20,13 +27,8 @@ export class QuestionsModalComponent {
   quizId: string = '';
   quizArr$!: Observable<QuestionsResAdabtor[]>;
   questionsOnExamArr: QuestionsResAdabtor[] = [] as QuestionsResAdabtor[];
-  // questionsOnExamArrLength: number = this.questionsOnExamArr.length;
-  // currentQuestionIndex: number = 0;
-  isQuizStarted: boolean = false;
-  // hideInstructionsAndShowQuestion() {
-  //   this.instructionsBox.nativeElement.classList.add('d-none');
-  //   this.questionCardBox.nativeElement.classList.remove('d-none');
-  // }
+  quizPhase: 'instructions' | 'start' | 'finishedAndShowScore' | 'result' =
+    'instructions';
   getQuizId() {
     this.quizId$ = this.store.select('quizId');
     this.quizId$.subscribe({
@@ -42,14 +44,18 @@ export class QuestionsModalComponent {
         this.store.dispatch(
           setQuizArrAction({ quizArr: this.questionsOnExamArr })
         );
-
-        // console.log(this.questionsOnExamArr);
       },
     });
   }
   startQuiz() {
-    this.isQuizStarted = true;
+    this.quizPhase = 'start';
     this.getQuizId();
     this.getQuestionsOnQuiz(this.quizId);
+  }
+  finishQuiz() {
+    this.quizPhase = 'finishedAndShowScore';
+  }
+  showResult() {
+    this.quizPhase = 'result';
   }
 }
