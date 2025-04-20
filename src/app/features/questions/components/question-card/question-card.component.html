@@ -1,8 +1,8 @@
-@if(questionsArr.length){
+@if(userAnswers.length){
 <div class="question-card">
     <div class="d-flex justify-content-between">
         <p class="nubmer-of-questions">Question {{currentQuestionIndex+1}} of
-            {{questionsArr.length}}</p>
+            {{userAnswers.length}}</p>
         <p class="duration" [class.almost-done]="durationCounter < 10"><img
                 src="./images/alarm.png"
                 alt> {{`
@@ -12,54 +12,57 @@
             `}}</p>
     </div>
     <div class="questions-steps">
-        @for (item of answerdQuestions; track $index) {
+        @for (item of answerdQuestionsStepsArr; track $index) {
         <span class="answerd"></span>
         }
-        @for (item of notAnswerdQuestions; track $index) {
+        @for (item of notAnswerdQuestionsStepsArr; track $index) {
         <span></span>
         }
     </div>
     <div class="question">
-        {{questionsArr[currentQuestionIndex].question}}
+        {{userAnswers[currentQuestionIndex].question}}
     </div>
-    <form [formGroup]="answerForm">
-        <div class="choices">
-            @for (answer of questionsArr[currentQuestionIndex].answers; track
-            $index)
-            {
-            <div class="choice">
-                @if(questionsArr[currentQuestionIndex].type == 'single_choice'){
-                <input value="{{answer.key}}" formControlName="userAnswer"
-                    type="radio"
-                    name="userAnswer" [id]="answer.key">
-                }@else {
-                <input value="{{answer.key}}" formControlName="userAnswer"
-                    type="checkbox"
-                    name="userAnswer" [id]="answer.key">
-                }
-                <label [for]="answer.key">{{answer.answer}}</label>
-            </div>
+    <div class="choices">
+        @for (answer of userAnswers[currentQuestionIndex].answers; track
+        $index)
+        {
+        <div class="choice">
+            @if(userAnswers[currentQuestionIndex].type == 'single_choice'){
+            <input value="{{answer.key}}" [formControl]="userAnswer"
+                (change)="setUserAnswer()"
+                [checked]="answer.key == userAnswers[currentQuestionIndex].userAnswer"
+                type="radio"
+                name="userAnswer" [id]="answer.key">
+            }@else {
+            <input value="{{answer.key}}" [formControl]="userAnswer"
+                (change)="setUserAnswer()"
+                [checked]="answer.key == userAnswers[currentQuestionIndex].userAnswer"
+                type="checkbox"
+                name="userAnswer" [id]="answer.key">
             }
+            <label
+                [for]="answer.key">{{answer.answer}}</label>
         </div>
-        <div class="questions-btns">
-            <button type="button" [class]="{
+        }
+    </div>
+    <div class="questions-btns">
+        <button type="button" [class]="{
                 'disabled-back-btn':currentQuestionIndex == 0,
                 'back-btn':currentQuestionIndex != 0,
             }" (click)="back()"
-                [disabled]="currentQuestionIndex == 0">Back</button>
-            @if(currentQuestionIndex +1 === questionsArr.length){
-            <button type="button" class="next-and-show-result-btn"
-                (click)="next();finishQuizAndShowScore.emit()">
-                Submit
-            </button>
-            }@else {
-            <button type="button" class="next-and-show-result-btn"
-                (click)="next()">
-                next
-            </button>
-            }
-        </div>
-    </form>
+            [disabled]="currentQuestionIndex == 0">Back</button>
+        @if(currentQuestionIndex +1 === userAnswers.length){
+        <button type="button" class="next-and-show-result-btn"
+            (click)="next();finishQuizAndShowScore.emit()">
+            Submit
+        </button>
+        }@else {
+        <button type="button" class="next-and-show-result-btn"
+            (click)="next()">
+            next
+        </button>
+        }
+    </div>
 </div>
 
 }

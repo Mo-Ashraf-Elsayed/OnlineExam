@@ -5,7 +5,7 @@
         <p class="in-correct">Incorrect <span>{{inCorrect}}</span></p>
     </div>
     <div class="score-btns">
-        <button class="back-btn" routerLink="/home">Back</button>
+        <button class="back-btn" (click)="closeQuizScoreModal()">Back</button>
         <button class="show-result-btn" (click)="showResult.emit()">Show
             Result</button>
     </div>

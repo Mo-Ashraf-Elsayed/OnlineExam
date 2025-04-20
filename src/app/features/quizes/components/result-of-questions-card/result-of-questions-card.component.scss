@@ -1,0 +1,36 @@
+@use "./../../../../../styles/_functions" as funs;
+.result-questions-card {
+  background-color: #f9f9f9;
+  box-shadow: 0px 0px 8px 0px #2a292940;
+  padding: funs.pxToRem(16) funs.pxToRem(8);
+  border-radius: 10px;
+  h5 {
+    margin-bottom: funs.pxToRem(16);
+  }
+  .answer {
+    background-color: #edeff3;
+    border-radius: 10px;
+    padding: funs.pxToRem(16) funs.pxToRem(8);
+    margin-bottom: funs.pxToRem(16);
+    display: flex;
+    align-items: center;
+    color: #011234;
+    word-break: break-all;
+    input {
+      margin: funs.pxToRem(16);
+      width: 20px;
+      height: 20px;
+      pointer-events: none;
+    }
+  }
+  .correct-answer {
+    background-color: #caf9cc;
+    accent-color: #11ce19;
+    border: solid 1px #11ce19;
+  }
+  .incorrect-answer {
+    background-color: #f8d2d2;
+    accent-color: #cc1010;
+    border: solid 1px #cc1010;
+  }
+}

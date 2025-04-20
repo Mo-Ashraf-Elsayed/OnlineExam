@@ -1,0 +1,11 @@
+@use "./../../../../../styles/break-points" as bp;
+
+.result-parent-ele {
+  width: 776px;
+}
+
+@media only screen and (max-width: bp.$md) {
+  .result-parent-ele {
+    width: 80vw;
+  }
+}

@@ -1,8 +1,8 @@
 import { createReducer, on } from '@ngrx/store';
-import { UserAnswers } from '../../../features/questions/models/interfaces/user-answers.interface';
 import { setUserAnswersAction } from './userAnswers.action';
+import { QuestionsResAdabtor } from '../../../features/questions/models/interfaces/adapt-questions-res.interface';
 
-const initValue: UserAnswers[] = [] as UserAnswers[];
+const initValue: QuestionsResAdabtor[] = [] as QuestionsResAdabtor[];
 
 export const userAnswersReducer = createReducer(
   initValue,

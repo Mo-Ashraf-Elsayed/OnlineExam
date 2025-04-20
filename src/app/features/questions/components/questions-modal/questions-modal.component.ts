@@ -6,8 +6,8 @@ import { Observable } from 'rxjs';
 import { QuestionsService } from '../../services/questions.service';
 import { QuestionsResAdabtor } from '../../models/interfaces/adapt-questions-res.interface';
 import { setQuizArrAction } from '../../../../core/store/quizArr/quizArr.action';
-import { QuizScoreComponent } from '../quiz-score/quiz-score.component';
-import { QuizResultComponent } from '../quiz-result/quiz-result.component';
+import { QuizScoreComponent } from '../../../quizes/components/quiz-score/quiz-score.component';
+import { QuizResultComponent } from '../../../quizes/components/quiz-result/quiz-result.component';
 
 @Component({
   selector: 'app-questions-modal',

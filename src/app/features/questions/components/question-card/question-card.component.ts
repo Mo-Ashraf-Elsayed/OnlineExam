@@ -1,8 +1,16 @@
-import { Component, EventEmitter, inject, Output } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  EventEmitter,
+  inject,
+  Output,
+  QueryList,
+  ViewChildren,
+} from '@angular/core';
 import { QuestionsResAdabtor } from '../../models/interfaces/adapt-questions-res.interface';
 import { Store } from '@ngrx/store';
 import { UserAnswers } from '../../models/interfaces/user-answers.interface';
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { setUserAnswersAction } from '../../../../core/store/userAnswers/userAnswers.action';
 
 @Component({
@@ -17,28 +25,22 @@ export class QuestionCardComponent {
   private readonly storeToSetUserAnswers: Store<{
     userAnswers: UserAnswers[];
   }> = inject(Store);
-  questionsArr: QuestionsResAdabtor[] = [] as QuestionsResAdabtor[];
+  userAnswer: FormControl = new FormControl(null);
   currentQuestionIndex: number = 0;
-  answerdQuestions: undefined[] = [undefined];
-  notAnswerdQuestions: undefined[] = [];
+  answerdQuestionsStepsArr: undefined[] = [undefined];
+  notAnswerdQuestionsStepsArr: undefined[] = [];
   durationCounter: number = 0;
   minute: number = 59;
   counterDown: ReturnType<typeof setInterval> = setInterval(() => {}, 0);
   userAnswers: UserAnswers[] = [] as UserAnswers[];
-  answerForm: FormGroup = new FormGroup({});
   @Output() finishQuizAndShowScore = new EventEmitter();
-  initForm() {
-    this.answerForm = new FormGroup({
-      userAnswer: new FormControl(''),
-    });
-  }
   getQuestionsArr() {
     this.storeForQuizArr.select('quizArr').subscribe({
       next: (value) => {
-        this.questionsArr = value;
+        this.getUserAnswersArr(value);
         if (+value != 0) {
-          this.notAnswerdQuestions = Array(
-            this.questionsArr.length - this.currentQuestionIndex - 1
+          this.notAnswerdQuestionsStepsArr = Array(
+            this.userAnswers.length - this.currentQuestionIndex - 1
           );
           this.setDurationCounter();
         }
@@ -46,7 +48,7 @@ export class QuestionCardComponent {
     });
   }
   setDurationCounter() {
-    this.durationCounter = this.questionsArr[0].duration;
+    this.durationCounter = this.userAnswers[0].duration;
     this.createCounterDown();
   }
   createCounterDown() {
@@ -67,44 +69,50 @@ export class QuestionCardComponent {
       this.durationCounter = 0;
     }
   }
-  getUserAnswerOnQuestion(location: 'next' | 'back' | 'submit') {
-    this.answerForm.value.questionId =
-      this.questionsArr[this.currentQuestionIndex].questionId;
-    this.answerForm.value.question =
-      this.questionsArr[this.currentQuestionIndex].question;
-    if (location === 'next' || location === 'submit') {
-      this.userAnswers.push({ ...this.answerForm.value });
-      if (location === 'submit') {
-        this.storeToSetUserAnswers.dispatch(
-          setUserAnswersAction({ userAnswers: this.userAnswers })
-        );
-      }
-    } else if (location === 'back') {
-      this.userAnswers.splice(this.currentQuestionIndex);
+  submitQuiz() {
+    this.storeToSetUserAnswers.dispatch(
+      setUserAnswersAction({ userAnswers: this.userAnswers })
+    );
+  }
+  getUserAnswersArr(arr: QuestionsResAdabtor[]) {
+    let myArr: UserAnswers[] = [];
+    for (let i = 0; i < arr.length; i++) {
+      myArr.push({ ...arr[i], userAnswer: '' });
+    }
+    this.userAnswers = myArr;
+  }
+  setUserAnswer() {
+    if (
+      this.userAnswers[this.currentQuestionIndex].userAnswer == '' ||
+      this.userAnswers[this.currentQuestionIndex].userAnswer !=
+        this.userAnswer.value
+    ) {
+      this.userAnswers[this.currentQuestionIndex].userAnswer =
+        this.userAnswer.value;
     }
   }
+  setArraysToDisplayQuestionsSteps() {
+    this.answerdQuestionsStepsArr = [...Array(this.currentQuestionIndex + 1)];
+    this.notAnswerdQuestionsStepsArr = [
+      ...Array(this.userAnswers.length - this.currentQuestionIndex - 1),
+    ];
+  }
   next() {
-    if (this.currentQuestionIndex + 1 === this.questionsArr.length) {
-      this.getUserAnswerOnQuestion('submit');
+    if (
+      this.currentQuestionIndex + 1 === this.userAnswers.length ||
+      (this.durationCounter == 0 && this.minute)
+    ) {
+      this.submitQuiz();
     } else {
-      this.getUserAnswerOnQuestion('next');
       this.currentQuestionIndex = this.currentQuestionIndex + 1;
-      this.answerdQuestions = [...Array(this.currentQuestionIndex + 1)];
-      this.notAnswerdQuestions = [
-        ...Array(this.questionsArr.length - this.currentQuestionIndex - 1),
-      ];
+      this.setArraysToDisplayQuestionsSteps();
     }
   }
   back() {
     this.currentQuestionIndex = this.currentQuestionIndex - 1;
-    this.answerdQuestions = [...Array(this.currentQuestionIndex + 1)];
-    this.notAnswerdQuestions = [
-      ...Array(this.questionsArr.length - this.currentQuestionIndex - 1),
-    ];
-    this.getUserAnswerOnQuestion('back');
+    this.setArraysToDisplayQuestionsSteps();
   }
   ngOnInit() {
     this.getQuestionsArr();
-    this.initForm();
   }
 }

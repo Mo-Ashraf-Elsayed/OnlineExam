@@ -1,0 +1,14 @@
+<div class="result-questions-card">
+    <h5>{{question}}</h5>
+    @for (answer of answers; track $index) {
+    <div class="answer" [class]="{
+        'correct-answer': correctAnswer === userAnswer && answer.key == userAnswer || answer.key == correctAnswer,
+        'incorrect-answer': correctAnswer !== userAnswer && answer.key == userAnswer,
+
+    }">
+        <input type="radio" [value]="answer.key"
+            [checked]="answer.key ==userAnswer">
+        <label>{{answer.answer}}</label>
+    </div>
+    }
+</div>

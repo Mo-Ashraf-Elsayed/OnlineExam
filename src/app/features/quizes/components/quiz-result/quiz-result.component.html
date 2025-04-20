@@ -1,0 +1,18 @@
+<div class="container-fluid result-parent-ele">
+    <div class="row row-gap-4">
+        @for (answer of userAnswers; track $index) {
+        <div class="col-md-6">
+            <app-result-of-questions-card
+                [question]="answer.question"
+                [userAnswer]="answer.userAnswer"
+                [correctAnswer]="answer.correctAnswer"
+                [answers]="answer.answers"></app-result-of-questions-card>
+
+        </div>
+        }
+    </div>
+    <div class="mt-3">
+        <app-submit-btn (click)="closeTheModal()">Close</app-submit-btn>
+
+    </div>
+</div>
