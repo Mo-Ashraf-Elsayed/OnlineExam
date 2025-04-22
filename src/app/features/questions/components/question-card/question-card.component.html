@@ -47,17 +47,25 @@
     </div>
     <div class="questions-btns">
         <button type="button" [class]="{
-                'disabled-back-btn':currentQuestionIndex == 0,
+                'disabled-btn':currentQuestionIndex == 0,
                 'back-btn':currentQuestionIndex != 0,
             }" (click)="back()"
             [disabled]="currentQuestionIndex == 0">Back</button>
         @if(currentQuestionIndex +1 === userAnswers.length){
-        <button type="button" class="next-and-show-result-btn"
+        <button type="button" [class]="{
+            'disabled-btn':userAnswers[currentQuestionIndex].userAnswer == '',
+            'next-and-show-result-btn':userAnswers[currentQuestionIndex].userAnswer != ''
+        }"
+            [disabled]="userAnswers[currentQuestionIndex].userAnswer == ''"
             (click)="next();finishQuizAndShowScore.emit()">
             Submit
         </button>
         }@else {
-        <button type="button" class="next-and-show-result-btn"
+        <button type="button" [class]="{
+            'disabled-btn':userAnswers[currentQuestionIndex].userAnswer == '',
+            'next-and-show-result-btn':userAnswers[currentQuestionIndex].userAnswer != ''
+        }"
+            [disabled]="userAnswers[currentQuestionIndex].userAnswer == ''"
             (click)="next()">
             next
         </button>
