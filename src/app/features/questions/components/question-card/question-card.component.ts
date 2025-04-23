@@ -1,16 +1,8 @@
-import {
-  Component,
-  ElementRef,
-  EventEmitter,
-  inject,
-  Output,
-  QueryList,
-  ViewChildren,
-} from '@angular/core';
+import { Component, EventEmitter, inject, Output } from '@angular/core';
 import { QuestionsResAdabtor } from '../../models/interfaces/adapt-questions-res.interface';
 import { Store } from '@ngrx/store';
 import { UserAnswers } from '../../models/interfaces/user-answers.interface';
-import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { setUserAnswersAction } from '../../../../core/store/userAnswers/userAnswers.action';
 
 @Component({
@@ -25,7 +17,9 @@ export class QuestionCardComponent {
   private readonly storeToSetUserAnswers: Store<{
     userAnswers: UserAnswers[];
   }> = inject(Store);
-  userAnswer: FormControl = new FormControl(null);
+  formAnswer: FormGroup = new FormGroup({
+    userAnswer: new FormControl(''),
+  });
   currentQuestionIndex: number = 0;
   answerdQuestionsStepsArr: undefined[] = [undefined];
   notAnswerdQuestionsStepsArr: undefined[] = [];
@@ -77,7 +71,7 @@ export class QuestionCardComponent {
   getUserAnswersArr(arr: QuestionsResAdabtor[]) {
     let myArr: UserAnswers[] = [];
     for (let i = 0; i < arr.length; i++) {
-      myArr.push({ ...arr[i], userAnswer: '' });
+      myArr.push({ ...arr[i], ...this.formAnswer.value });
     }
     this.userAnswers = myArr;
   }
@@ -85,10 +79,11 @@ export class QuestionCardComponent {
     if (
       this.userAnswers[this.currentQuestionIndex].userAnswer == '' ||
       this.userAnswers[this.currentQuestionIndex].userAnswer !=
-        this.userAnswer.value
+        this.formAnswer.value.userAnswer
     ) {
       this.userAnswers[this.currentQuestionIndex].userAnswer =
-        this.userAnswer.value;
+        this.formAnswer.value.userAnswer;
+      this.formAnswer.setValue({ userAnswer: 'A1' });
     }
   }
   setArraysToDisplayQuestionsSteps() {

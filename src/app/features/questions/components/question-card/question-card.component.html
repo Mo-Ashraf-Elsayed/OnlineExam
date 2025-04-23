@@ -22,55 +22,57 @@
     <div class="question">
         {{userAnswers[currentQuestionIndex].question}}
     </div>
-    <div class="choices">
-        @for (answer of userAnswers[currentQuestionIndex].answers; track
-        $index)
-        {
-        <div class="choice">
-            @if(userAnswers[currentQuestionIndex].type == 'single_choice'){
-            <input value="{{answer.key}}" [formControl]="userAnswer"
-                (change)="setUserAnswer()"
-                [checked]="answer.key == userAnswers[currentQuestionIndex].userAnswer"
-                type="radio"
-                name="userAnswer" [id]="answer.key">
-            }@else {
-            <input value="{{answer.key}}" [formControl]="userAnswer"
-                (change)="setUserAnswer()"
-                [checked]="answer.key == userAnswers[currentQuestionIndex].userAnswer"
-                type="checkbox"
-                name="userAnswer" [id]="answer.key">
+    <form [formGroup]="formAnswer">
+        <div class="choices">
+            @for (answer of userAnswers[currentQuestionIndex].answers; track
+            $index)
+            {
+            <div class="choice">
+                @if(userAnswers[currentQuestionIndex].type == 'single_choice'){
+                <input value="{{answer.key}}" formControlName="userAnswer"
+                    (change)="setUserAnswer()"
+                    [checked]="answer.key == userAnswers[currentQuestionIndex].userAnswer"
+                    type="radio"
+                    name="userAnswer" [id]="answer.key">
+                }@else {
+                <input value="{{answer.key}}" formControlName="userAnswer"
+                    (change)="setUserAnswer()"
+                    [checked]="answer.key == userAnswers[currentQuestionIndex].userAnswer"
+                    type="checkbox"
+                    name="userAnswer" [id]="answer.key">
+                }
+                <label
+                    [for]="answer.key">{{answer.answer}}</label>
+            </div>
             }
-            <label
-                [for]="answer.key">{{answer.answer}}</label>
         </div>
-        }
-    </div>
-    <div class="questions-btns">
-        <button type="button" [class]="{
-                'disabled-btn':currentQuestionIndex == 0,
-                'back-btn':currentQuestionIndex != 0,
-            }" (click)="back()"
-            [disabled]="currentQuestionIndex == 0">Back</button>
-        @if(currentQuestionIndex +1 === userAnswers.length){
-        <button type="button" [class]="{
-            'disabled-btn':userAnswers[currentQuestionIndex].userAnswer == '',
-            'next-and-show-result-btn':userAnswers[currentQuestionIndex].userAnswer != ''
-        }"
-            [disabled]="userAnswers[currentQuestionIndex].userAnswer == ''"
-            (click)="next();finishQuizAndShowScore.emit()">
-            Submit
-        </button>
-        }@else {
-        <button type="button" [class]="{
-            'disabled-btn':userAnswers[currentQuestionIndex].userAnswer == '',
-            'next-and-show-result-btn':userAnswers[currentQuestionIndex].userAnswer != ''
-        }"
-            [disabled]="userAnswers[currentQuestionIndex].userAnswer == ''"
-            (click)="next()">
-            next
-        </button>
-        }
-    </div>
+        <div class="questions-btns">
+            <button type="button" [class]="{
+                    'disabled-btn':currentQuestionIndex == 0,
+                    'back-btn':currentQuestionIndex != 0,
+                }" (click)="back()"
+                [disabled]="currentQuestionIndex == 0">Back</button>
+            @if(currentQuestionIndex +1 === userAnswers.length){
+            <button type="button" [class]="{
+                'disabled-btn':userAnswers[currentQuestionIndex].userAnswer == '',
+                'next-and-show-result-btn':userAnswers[currentQuestionIndex].userAnswer != ''
+            }"
+                [disabled]="userAnswers[currentQuestionIndex].userAnswer == ''"
+                (click)="next();finishQuizAndShowScore.emit()">
+                Submit
+            </button>
+            }@else {
+            <button type="button" [class]="{
+                'disabled-btn':userAnswers[currentQuestionIndex].userAnswer == '',
+                'next-and-show-result-btn':userAnswers[currentQuestionIndex].userAnswer != ''
+            }"
+                [disabled]="userAnswers[currentQuestionIndex].userAnswer == ''"
+                (click)="next()">
+                next
+            </button>
+            }
+        </div>
+    </form>
 </div>
 
 }

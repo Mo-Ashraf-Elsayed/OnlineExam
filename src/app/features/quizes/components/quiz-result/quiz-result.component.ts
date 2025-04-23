@@ -4,6 +4,7 @@ import { UserAnswers } from '../../../questions/models/interfaces/user-answers.i
 import { ResultOfQuestionsCardComponent } from '../result-of-questions-card/result-of-questions-card.component';
 import { SubmitBtnComponent } from '../../../../core/auth/components/submit-btn/submit-btn.component';
 import { QuizesService } from '../../services/quizes.service';
+import { resetUserAnswerAction } from '../../../../core/store/userAnswers/userAnswers.action';
 
 @Component({
   selector: 'app-quiz-result',
@@ -16,6 +17,7 @@ export class QuizResultComponent implements OnInit {
   private readonly storeToSetUserAnswers: Store<{
     userAnswers: UserAnswers[];
   }> = inject(Store);
+  private readonly storeToResetArr: Store = inject(Store);
   userAnswers: UserAnswers[] = [] as UserAnswers[];
   getArrays() {
     this.storeToSetUserAnswers.select('userAnswers').subscribe({
@@ -26,6 +28,7 @@ export class QuizResultComponent implements OnInit {
   }
   closeTheModal() {
     this.quizesService.isQuizStarted.set(false);
+    this.storeToResetArr.dispatch(resetUserAnswerAction());
   }
   ngOnInit(): void {
     this.getArrays();
