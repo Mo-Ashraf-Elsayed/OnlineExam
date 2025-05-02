@@ -1,5 +1,12 @@
-import { Component, inject, OnDestroy, OnInit } from '@angular/core';
-import { Router, RouterLink } from '@angular/router';
+import {
+  Component,
+  EventEmitter,
+  inject,
+  OnDestroy,
+  OnInit,
+  Output,
+} from '@angular/core';
+import { RouterLink } from '@angular/router';
 import {
   FormGroup,
   FormControl,
@@ -27,7 +34,7 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
   forgotPasswordForm: FormGroup = new FormGroup({});
   private readonly authService = inject(AuthApiService);
   private readonly userEmailService = inject(UserEmailService);
-  private readonly router = inject(Router);
+  @Output() changeForgotPassFlowCase = new EventEmitter();
   cancelSubscription: Subscription = new Subscription();
   isFormSubmited: boolean = false;
   initForm(): void {
@@ -43,9 +50,10 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
         .subscribe({
           next: () => {
             this.isFormSubmited = false;
-            this.router.navigate(['/forgotPassword/verify'], {
-              skipLocationChange: true,
-            });
+            // this.router.navigate(['/forgotPassword/verify'], {
+            //   skipLocationChange: true,
+            // });
+            this.changeForgotPassFlowCase.emit();
             this.userEmailService.userEmail.set(
               this.forgotPasswordForm.get('email')?.value
             );
@@ -56,6 +64,7 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
         });
     } else {
       this.forgotPasswordForm.markAllAsTouched();
+      this.isFormSubmited = false;
     }
   }
   ngOnInit(): void {

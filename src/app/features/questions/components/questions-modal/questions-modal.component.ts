@@ -1,8 +1,8 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnDestroy } from '@angular/core';
 import { InstructionsCardComponent } from '../instructions-card/instructions-card.component';
 import { QuestionCardComponent } from '../question-card/question-card.component';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { QuestionsService } from '../../services/questions.service';
 import { QuestionsResAdabtor } from '../../models/interfaces/adapt-questions-res.interface';
 import { setQuizArrAction } from '../../../../core/store/quizArr/quizArr.action';
@@ -20,7 +20,7 @@ import { QuizResultComponent } from '../../../quizes/components/quiz-result/quiz
   templateUrl: './questions-modal.component.html',
   styleUrl: './questions-modal.component.scss',
 })
-export class QuestionsModalComponent {
+export class QuestionsModalComponent implements OnDestroy {
   private readonly questionsService = inject(QuestionsService);
   private readonly store: Store<{ quizId: string }> = inject(Store);
   quizId$!: Observable<string>;
@@ -29,9 +29,10 @@ export class QuestionsModalComponent {
   questionsOnExamArr: QuestionsResAdabtor[] = [] as QuestionsResAdabtor[];
   quizPhase: 'instructions' | 'start' | 'finishedAndShowScore' | 'result' =
     'instructions';
+  cancelSubscribe: Subscription = new Subscription();
   getQuizId() {
     this.quizId$ = this.store.select('quizId');
-    this.quizId$.subscribe({
+    this.cancelSubscribe = this.quizId$.subscribe({
       next: (value) => {
         this.quizId = value;
       },
@@ -57,5 +58,8 @@ export class QuestionsModalComponent {
   }
   showResult() {
     this.quizPhase = 'result';
+  }
+  ngOnDestroy(): void {
+    this.cancelSubscribe.unsubscribe();
   }
 }

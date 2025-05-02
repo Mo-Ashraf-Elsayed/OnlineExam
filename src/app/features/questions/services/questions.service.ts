@@ -4,6 +4,7 @@ import { map, Observable } from 'rxjs';
 import { environment } from '../../../../environment/environment';
 import { QuestionsDataAdaptorService } from '../models/adaptor/questions-data-adaptor';
 import { QuestionsResAdabtor } from '../models/interfaces/adapt-questions-res.interface';
+import { QuestionsRes } from '../models/interfaces/questions.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -15,9 +16,9 @@ export class QuestionsService {
   );
   getQuestionsOnExam(quizId: string): Observable<QuestionsResAdabtor[]> {
     return this.http
-      .get(environment.baseURL + `questions?exam=${quizId}`)
+      .get<QuestionsRes>(environment.baseURL + `questions?exam=${quizId}`)
       .pipe(
-        map((data: any) =>
+        map((data: QuestionsRes) =>
           this.questionsDataAdaptorService.adaptQuestionsRes(data)
         )
       );

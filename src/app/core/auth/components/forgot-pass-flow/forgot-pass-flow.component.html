@@ -1,1 +1,8 @@
-<router-outlet />
+@if(forgotPasswordCase === 'forgotPass'){
+<app-forgot-password
+    (changeForgotPassFlowCase)="secondStep()"></app-forgot-password>
+}@else if(forgotPasswordCase === 'verifyCode'){
+<app-verify-code (changeForgotPassFlowCase)="thirdStep()"></app-verify-code>
+}@else if(forgotPasswordCase === 'resetPass'){
+<app-set-password></app-set-password>
+}

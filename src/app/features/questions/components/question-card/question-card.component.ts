@@ -1,9 +1,17 @@
-import { Component, EventEmitter, inject, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  inject,
+  OnDestroy,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { QuestionsResAdabtor } from '../../models/interfaces/adapt-questions-res.interface';
 import { Store } from '@ngrx/store';
 import { UserAnswers } from '../../models/interfaces/user-answers.interface';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { setUserAnswersAction } from '../../../../core/store/userAnswers/userAnswers.action';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-question-card',
@@ -11,7 +19,7 @@ import { setUserAnswersAction } from '../../../../core/store/userAnswers/userAns
   templateUrl: './question-card.component.html',
   styleUrl: './question-card.component.scss',
 })
-export class QuestionCardComponent {
+export class QuestionCardComponent implements OnInit, OnDestroy {
   private readonly storeForQuizArr: Store<{ quizArr: QuestionsResAdabtor[] }> =
     inject(Store);
   private readonly storeToSetUserAnswers: Store<{
@@ -28,8 +36,9 @@ export class QuestionCardComponent {
   counterDown: ReturnType<typeof setInterval> = setInterval(() => {}, 0);
   userAnswers: UserAnswers[] = [] as UserAnswers[];
   @Output() finishQuizAndShowScore = new EventEmitter();
+  cancelSubscribe: Subscription = new Subscription();
   getQuestionsArr() {
-    this.storeForQuizArr.select('quizArr').subscribe({
+    this.cancelSubscribe = this.storeForQuizArr.select('quizArr').subscribe({
       next: (value) => {
         this.getUserAnswersArr(value);
         if (+value != 0) {
@@ -109,5 +118,8 @@ export class QuestionCardComponent {
   }
   ngOnInit() {
     this.getQuestionsArr();
+  }
+  ngOnDestroy(): void {
+    this.cancelSubscribe.unsubscribe();
   }
 }

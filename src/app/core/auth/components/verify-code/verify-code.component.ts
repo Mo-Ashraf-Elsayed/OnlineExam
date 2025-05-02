@@ -1,11 +1,18 @@
-import { Component, inject, OnDestroy, OnInit } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  inject,
+  OnDestroy,
+  OnInit,
+  Output,
+} from '@angular/core';
 import {
   FormControl,
   FormGroup,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { SubmitBtnComponent } from '../submit-btn/submit-btn.component';
 import { AuthApiService } from 'elevate-auth-api';
 import { Subscription } from 'rxjs';
@@ -26,7 +33,7 @@ export class VerifyCodeComponent implements OnInit, OnDestroy {
   verifyCodeForm: FormGroup = new FormGroup({});
   private readonly authService = inject(AuthApiService);
   private readonly userEmailService = inject(UserEmailService);
-  private readonly router = inject(Router);
+  @Output() changeForgotPassFlowCase = new EventEmitter();
   userEmail: string = '';
   cancelSubscription: Subscription = new Subscription();
   isFormSubmited: boolean = false;
@@ -46,9 +53,10 @@ export class VerifyCodeComponent implements OnInit, OnDestroy {
         .subscribe({
           next: () => {
             this.isFormSubmited = false;
-            this.router.navigate(['/forgotPassword/setPass'], {
-              skipLocationChange: true,
-            });
+            // this.router.navigate(['/forgotPassword/setPass'], {
+            //   skipLocationChange: true,
+            // });
+            this.changeForgotPassFlowCase.emit();
           },
           error: () => {
             this.isFormSubmited = false;

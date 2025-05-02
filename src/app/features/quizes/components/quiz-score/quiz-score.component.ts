@@ -1,7 +1,15 @@
-import { Component, EventEmitter, inject, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  inject,
+  OnDestroy,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { UserAnswers } from '../../../questions/models/interfaces/user-answers.interface';
 import { Store } from '@ngrx/store';
 import { QuizesService } from '../../services/quizes.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-quiz-score',
@@ -9,7 +17,7 @@ import { QuizesService } from '../../services/quizes.service';
   templateUrl: './quiz-score.component.html',
   styleUrl: './quiz-score.component.scss',
 })
-export class QuizScoreComponent implements OnInit {
+export class QuizScoreComponent implements OnInit, OnDestroy {
   private readonly storeToSetUserAnswers: Store<{
     userAnswers: UserAnswers[];
   }> = inject(Store);
@@ -18,18 +26,20 @@ export class QuizScoreComponent implements OnInit {
   correct: number = 0;
   inCorrect: number = 0;
   @Output() showResult = new EventEmitter();
+  cancelSubscribe: Subscription = new Subscription();
   getUserAnswersArr() {
-    this.storeToSetUserAnswers.select('userAnswers').subscribe({
-      next: (res) => {
-        this.userAnswers = res;
-      },
-    });
+    this.cancelSubscribe = this.storeToSetUserAnswers
+      .select('userAnswers')
+      .subscribe({
+        next: (res) => {
+          this.userAnswers = res;
+        },
+      });
   }
   getTheScore() {
     for (let i = 0; i < this.userAnswers.length; i++) {
       if (this.userAnswers[i].questionId !== this.userAnswers[i].questionId) {
         throw new Error('userAnswers Array is not valid');
-        break;
       }
       if (
         this.userAnswers[i].userAnswer === this.userAnswers[i].correctAnswer
@@ -48,5 +58,8 @@ export class QuizScoreComponent implements OnInit {
   ngOnInit(): void {
     this.getUserAnswersArr();
     this.getTheScore();
+  }
+  ngOnDestroy() {
+    this.cancelSubscribe.unsubscribe();
   }
 }
