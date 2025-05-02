@@ -55,6 +55,22 @@ export class QuizScoreComponent implements OnInit, OnDestroy {
   closeQuizScoreModal() {
     this.quizesService.isQuizStarted.set(false);
   }
+  getChartBackground(correct: number, inCorrect: number): string {
+    return `conic-gradient(
+      #02369c 0% ${this.getPercentageValueForCorrectAnswers(
+        correct,
+        inCorrect
+      )}%,
+      #cc1010 ${this.getPercentageValueForCorrectAnswers(
+        correct,
+        inCorrect
+      )}% 100%
+    )`;
+  }
+  getPercentageValueForCorrectAnswers(correct: number, inCorrect: number) {
+    if (correct + inCorrect === 0) return 0;
+    return Math.round((correct / (correct + inCorrect)) * 100);
+  }
   ngOnInit(): void {
     this.getUserAnswersArr();
     this.getTheScore();

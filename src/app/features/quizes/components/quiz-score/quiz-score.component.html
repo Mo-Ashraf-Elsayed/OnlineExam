@@ -1,8 +1,17 @@
 <div class="score-parent-ele">
     <h4>Your score</h4>
-    <div class="score">
-        <p class="correct">Correct <span>{{correct}}</span></p>
-        <p class="in-correct">Incorrect <span>{{inCorrect}}</span></p>
+    <div class="score-body">
+        <div class="circle-chart" [style]="{
+             background: getChartBackground(correct,inCorrect)
+        }">
+            <div class="score-percentage">
+                {{getPercentageValueForCorrectAnswers(correct,inCorrect)}}%
+            </div>
+        </div>
+        <div class="score">
+            <p class="correct">Correct <span>{{correct}}</span></p>
+            <p class="in-correct">Incorrect <span>{{inCorrect}}</span></p>
+        </div>
     </div>
     <div class="score-btns">
         <button class="back-btn" (click)="closeQuizScoreModal()">Back</button>

@@ -1,6 +1,7 @@
 @use "./../../../../../styles/variables" as vars;
 @use "./../../../../../styles/functions" as funs;
 @use "./../../../../../styles/break-points" as bp;
+@use "./../../../../../styles/placeholder-mixins" as placeholderAndMixins;
 $correct: #02369c;
 $in-correct: #cc1010;
 .score-parent-ele {
@@ -8,37 +9,55 @@ $in-correct: #cc1010;
   h4 {
     margin-bottom: funs.pxToRem(48);
   }
-  .score {
-    p {
-      width: 170px;
-      display: flex;
-      justify-content: space-between;
-      font-size: funs.pxToRem(24);
-      font-weight: 500;
-      span {
-        display: inline-block;
-        text-align: center;
-        line-height: 32px;
-        width: 32px;
-        height: 32px;
+  .score-body {
+    @include placeholderAndMixins.flex-align(space-evenly, center);
+    .score {
+      p {
+        width: 170px;
+        display: flex;
+        justify-content: space-between;
+        font-size: funs.pxToRem(24);
+        font-weight: 500;
+        span {
+          display: inline-block;
+          text-align: center;
+          line-height: 32px;
+          width: 32px;
+          height: 32px;
+          border-radius: 50%;
+          border: solid 1px;
+          font-size: funs.pxToRem(16);
+        }
+      }
+      .correct {
+        color: $correct;
+        span {
+          border-color: $correct;
+        }
+      }
+      .in-correct {
+        color: $in-correct;
+        span {
+          border-color: $in-correct;
+        }
+      }
+    }
+    .circle-chart {
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      @extend %flex-center;
+      background: conic-gradient(#02369c 0% 60%, #cc1010 60% 100%);
+      .score-percentage {
+        @extend %flex-center;
+        background-color: white;
+        width: 93%;
+        height: 93%;
         border-radius: 50%;
-        border: solid 1px;
-        font-size: funs.pxToRem(16);
-      }
-    }
-    .correct {
-      color: $correct;
-      span {
-        border-color: $correct;
-      }
-    }
-    .in-correct {
-      color: $in-correct;
-      span {
-        border-color: $in-correct;
       }
     }
   }
+
   .score-btns {
     display: flex;
     justify-content: space-between;
