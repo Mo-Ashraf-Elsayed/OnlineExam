@@ -52,25 +52,20 @@
                     'back-btn':currentQuestionIndex != 0,
                 }" (click)="back()"
                 [disabled]="currentQuestionIndex == 0">Back</button>
-            @if(currentQuestionIndex +1 === userAnswers.length){
+
             <button type="button" [class]="{
                 'disabled-btn':userAnswers[currentQuestionIndex].userAnswer == '',
                 'next-and-show-result-btn':userAnswers[currentQuestionIndex].userAnswer != ''
             }"
                 [disabled]="userAnswers[currentQuestionIndex].userAnswer == ''"
-                (click)="next();finishQuizAndShowScore.emit()">
+                (click)="nextOrSubmit()">
+                @if(currentQuestionIndex +1 === userAnswers.length){
                 Submit
-            </button>
-            }@else {
-            <button type="button" [class]="{
-                'disabled-btn':userAnswers[currentQuestionIndex].userAnswer == '',
-                'next-and-show-result-btn':userAnswers[currentQuestionIndex].userAnswer != ''
-            }"
-                [disabled]="userAnswers[currentQuestionIndex].userAnswer == ''"
-                (click)="next()">
+                }@else {
                 next
+                }
             </button>
-            }
+
         </div>
     </form>
 </div>

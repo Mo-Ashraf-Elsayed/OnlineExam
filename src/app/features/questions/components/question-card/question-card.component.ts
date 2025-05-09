@@ -42,37 +42,39 @@ export class QuestionCardComponent implements OnInit, OnDestroy {
       next: (value) => {
         this.getUserAnswersArr(value);
         if (+value != 0) {
-          this.notAnswerdQuestionsStepsArr = Array(
-            this.userAnswers.length - this.currentQuestionIndex - 1
-          );
+          this.setArraysToDisplayQuestionsSteps();
           this.setDurationCounter();
+          this.createCounterDown();
         }
       },
     });
   }
   setDurationCounter() {
     this.durationCounter = this.userAnswers[0].duration;
-    this.createCounterDown();
   }
   createCounterDown() {
+    clearInterval(this.counterDown);
     this.durationCounter = this.durationCounter - 1;
     this.counterDown = setInterval(() => {
       this.minute = this.minute - 1;
       if (this.minute == 0) {
         this.minute = 59;
         this.durationCounter = this.durationCounter - 1;
-        this.stopCounterDown();
+        if (this.durationCounter <= 0) this.stopCounterDown();
       }
     }, 1000);
   }
   stopCounterDown() {
-    if (this.durationCounter <= 0) {
-      clearInterval(this.counterDown);
-      this.minute = 0;
-      this.durationCounter = 0;
-    }
+    clearInterval(this.counterDown);
+    this.minute = 0;
+    this.durationCounter = 0;
   }
   submitQuiz() {
+    this.setAllUserAnswersToNgrxStore();
+    this.stopCounterDown();
+    this.finishQuizAndShowScore.emit();
+  }
+  setAllUserAnswersToNgrxStore() {
     this.storeToSetUserAnswers.dispatch(
       setUserAnswersAction({ userAnswers: this.userAnswers })
     );
@@ -96,12 +98,12 @@ export class QuestionCardComponent implements OnInit, OnDestroy {
     }
   }
   setArraysToDisplayQuestionsSteps() {
-    this.answerdQuestionsStepsArr = [...Array(this.currentQuestionIndex + 1)];
-    this.notAnswerdQuestionsStepsArr = [
-      ...Array(this.userAnswers.length - this.currentQuestionIndex - 1),
-    ];
+    this.answerdQuestionsStepsArr = Array(this.currentQuestionIndex + 1);
+    this.notAnswerdQuestionsStepsArr = Array(
+      this.userAnswers.length - this.currentQuestionIndex - 1
+    );
   }
-  next() {
+  nextOrSubmit() {
     if (
       this.currentQuestionIndex + 1 === this.userAnswers.length ||
       (this.durationCounter == 0 && this.minute)
